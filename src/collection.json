@@ -1,0 +1,9 @@
+{
+  "schematics": {
+    "ng-landing": {
+      "factory": "./ng-landing",
+      "description": "Create Landing structure for TALENT.SASS",
+      "schema": "./ng-landing/schema.json"
+    }
+  }
+}

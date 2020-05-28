@@ -1,0 +1,125 @@
+<div class="login-section">
+  <div class="login-container">
+    <a routerLink="/" class="login-logo w-inline-block">
+      <img class="login-logo-img" src="/assets/images/profilum-logo.svg" alt="Profilum logo">
+    </a>
+
+    <div class="tabs login w-tabs">
+      <div class="tabs-menu w-tab-menu">
+        <a [routerLink]="['/login-<%= name %>']" class="tab-link login w-inline-block w-tab-link">
+          <div>Вход</div>
+          <img src="/assets/images/angle.png" width="20" class="angle">
+        </a>
+        <a [routerLink]="['/registration-<%= name %>']" class="tab-link login w-inline-block w-tab-link w--current">
+          <div>Регистрация</div>
+          <img src="/assets/images/angle2.png" width="20" class="angle _2">
+        </a>
+      </div>
+
+      <div class="tab-pane login">
+        <div class="user-data-form-block w-form">
+          <div class="login-form-row reg-form">
+            <div class="login-form-column">
+              <a routerLink="/registration-<%= name %>" class="reg-form-back-button">Назад</a>
+            </div>
+            <div class="login-field-column reg-form" *ngIf="registrationPupil">
+              <img src="/assets/images/reg-student.svg" class="registration-link-image reg-form">
+              <div class="registration-link-text reg-form">Ученик</div>
+            </div>
+            <div class="login-field-column reg-form" *ngIf="registrationTeacher">
+              <img src="/assets/images/reg-teacher.svg" class="registration-link-image reg-form">
+              <div class="registration-link-text reg-form">Учитель</div>
+            </div>
+            <div class="login-field-column reg-form" *ngIf="registrationOther">
+              <img src="/assets/images/reg-other.svg" class="registration-link-image reg-form">
+              <div class="registration-link-text reg-form">Организация</div>
+            </div>
+            <div *ngIf="registrationPupil">
+              <a *ngIf="tglRegistration" (click)="toggleRegistration()">Регистрация</a>
+              <a *ngIf="!tglRegistration" (click)="toggleRegistration()">У меня есть код</a>
+            </div>
+          </div>
+          <form [formGroup]="form" *ngIf="accessFormRole()" autocomplete="off">
+            <div class="login-form-row">
+              <label for="email" class="login-label">Электронная почта</label>
+              <div class="login-field-column">
+                <input type="email" autocomplete="off"
+                  class="login-field w-input"
+                  [class.error-field]="submitted && f.email.errors || submitted && duplicateUserName" maxlength="256"
+                  name="email" data-name="email" id="email" formControlName="email"
+                  (focusout)="checkFormatEmail($event)">
+                <ng-container>
+                  <mat-error *ngIf="!checkEmail">
+                    Проверьте правильность email
+                  </mat-error>
+                  <mat-error *ngIf="submitted && duplicateUserName">
+                    Пользователь с такой электронной почтой уже существует
+                  </mat-error>
+                </ng-container>
+              </div>
+            </div>
+            <div class="login-form-row">
+              <label for="password" class="login-label">Код доступа</label>
+              <div class="login-field-column">
+                <input *ngIf="isMaskedPassword" type="password"
+                  autocomplete="new-password" class="login-field w-input short-right"
+                  [class.error-field]="submitted && f.password.errors || passFailed" maxlength="256" name="password"
+                  data-name="password" id="password" formControlName="password">
+                <input *ngIf="!isMaskedPassword" type="text"
+                  autocomplete="new-password" class="login-field w-input short-right"
+                  [class.error-field]="submitted && f.password.errors || passFailed" maxlength="256" name="password"
+                  data-name="password" id="passwordUnMask" formControlName="password">
+                <div class="under-field-text" *ngIf="registrationPupil">Этот код даст тебе родитель или учитель</div>
+                <div class="under-field-text" *ngIf="registrationTeacher">Получите код у администратора вашей школы
+                </div>
+                <div class="under-field-text" *ngIf="registrationOther">Для получения кода обратитесь в администрацию
+                  сервиса</div>
+                <div [ngClass]="{'eye': !isMaskedPassword, 'eye__closed': isMaskedPassword}" (click)="toggleMask()">
+                </div>
+                <ng-container *ngIf="submitted && f.password.errors">
+                  <mat-error *ngIf="f.password.errors.required">
+                    Заполните поле
+                  </mat-error>
+                </ng-container>
+                <mat-error *ngIf="submitted && passFailed">
+                  Проверьте правильность кода
+                </mat-error>
+              </div>
+            </div>
+
+            <div class="terms" *ngIf="!registrationPupil">
+              <div class="checkbox-terms-grn" [class.checked-terms-grn]="personalTerms"
+                (click)="personalTerms = !personalTerms">
+              </div>
+              <span class="terms-text">Принимаю условия
+                <a href="/assets/docs/Agreement.pdf" target="_blank">пользовательского
+                  соглашения</a> и даю согласие на обработку моих
+                <a href="/assets/docs/PrivacyPolicy.pdf" target="_blank">персональных данных</a>
+              </span>
+            </div>
+            <div class="terms" *ngIf="!registrationPupil">
+              <div class="checkbox-terms-grn" [class.checked-terms-grn]="advertisingTerms"
+                (click)="advertisingTerms = !advertisingTerms"></div>
+              <span class="terms-text">Я хочу получать
+                <a href="/assets/docs/ReceivingAdvertising.pdf" target="_blank">уведомления и рекламные акции</a>
+              </span>
+            </div>
+            <div class="w-center-content">
+              <a (click)="animateLogin()" [ngClass]="{'disabled': !isAccessAllowed()}"
+                [class.btn-waiting]="buttonWaiting" [class.btn-activated]="buttonActivated"
+                [class.btn-activate]="!buttonActivate" class="button-animate btn-activate" id="btnActivation">
+                <span class="btn-icon"></span>
+                <span class="btn-text" data-wait="Подождите" data-after="Зарегистрироваться">Зарегистрироваться</span>
+              </a>
+            </div>
+          </form>
+
+          <!-- OPEN FORM REGISTRATION PUPIL -->
+          <prf-registration-pupil-<%= name %> *ngIf="registrationPupil && !tglRegistration" [tag]="tag"></prf-registration-pupil-<%= name %>>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

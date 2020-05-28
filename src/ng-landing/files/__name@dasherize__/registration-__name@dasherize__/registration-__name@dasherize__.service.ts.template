@@ -1,0 +1,49 @@
+import {map} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpService} from 'app/core/services/http.service';
+import {SchoolClassesClass} from '../../../../shared/classes/school-classes.class';
+
+@Injectable()
+export class Registration<%= classify(name) %>Service {
+
+  constructor(private http: HttpService) {
+  }
+
+  async registration(login: string, pass: string, advertisingTerms?: boolean) {
+    let credentials = {
+      email: login,
+      password: pass,
+      isConsentToMailing: advertisingTerms
+    };
+    const response = await this.http.post('/api/v1.0/saas/register', credentials).toPromise();
+    const ALREADY_EXIST = 'already exists';
+    let include = response.status.includes(ALREADY_EXIST);
+    if (include) {
+      return 'ALREADY_EXIST'
+    } else {
+      return response
+    }
+  }
+
+  public openregistration(credentials: any) {
+    return this.http.post('/api/v1.0/saas/registeropen', credentials).pipe(map((r) => r));
+  }
+
+  public user(user: any) {
+    return this.http.post('/api/v1.0/saas/adduser', user).pipe(map((r) => r));
+  }
+
+  async getSchoolClassesBySchool(id): Promise<any> {
+    const response = await this.http.get('/api/v1.0/saas/getschoolclassesbyschool?schoolId=' + id).toPromise();
+    return response as SchoolClassesClass[];
+  }
+
+  public login(login: string, pass: string, rememberMe?: boolean) {
+    let credentials = {
+      email: login,
+      password: pass,
+      rememberMe: rememberMe === true,
+    };
+    return this.http.post('/api/v1.0/saas/login', credentials).pipe(map((r) => r));
+  }
+}

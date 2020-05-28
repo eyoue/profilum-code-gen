@@ -1,0 +1,46 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { Login<%= classify(name) %>Component } from './login-<%= name %>/login-<%= name %>.component';
+import { MainGuard } from '../../guards/main.guard';
+import { Registration<%= classify(name) %>Component } from './registration-<%= name %>/registration-<%= name %>.component';
+import { OpenRegistration<%= classify(name) %>Component } from './registration-<%= name %>/open-registration-<%= name %>/open-registration-<%= name %>.component';
+import { CodeRegistration<%= classify(name) %>Component } from './registration-<%= name %>/code-registration-<%= name %>/code-registration-<%= name %>.component';
+import { Tokenauth<%= classify(name) %>Component } from './tokenauth-<%= name %>/tokenauth-<%= name %>.component';
+
+const routes: Routes = [
+    { path: 'login-<%= name %>', component: Login<%= classify(name) %>Component, canActivate: [MainGuard] },
+  {
+      path: 'registration-<%= name %>',
+      component: Registration<%= classify(name) %>Component,
+      pathMatch: 'full'
+  },
+  {
+      path: 'registration-parent-<%= name %>',
+      component: OpenRegistration<%= classify(name) %>Component,
+      pathMatch: 'full'
+  },
+  {
+      path: 'registration-pupil-<%= name %>',
+      component: CodeRegistration<%= classify(name) %>Component,
+      pathMatch: 'full'
+  },
+  {
+      path: 'registration-teacher-<%= name %>',
+      component: CodeRegistration<%= classify(name) %>Component,
+      pathMatch: 'full'
+  },
+  {
+      path: 'registration-other-<%= name %>',
+      component: CodeRegistration<%= classify(name) %>Component,
+      pathMatch: 'full'
+  },
+  { path: 'tokenauth-<%= name %>', component: Tokenauth<%= classify(name) %>Component },
+
+  { path: 'openregistration-<%= name %>', component: OpenRegistration<%= classify(name) %>Component },
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class Landing<%= classify(name) %>RoutingModule { }

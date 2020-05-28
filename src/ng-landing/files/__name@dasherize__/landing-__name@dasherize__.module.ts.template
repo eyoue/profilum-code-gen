@@ -1,0 +1,50 @@
+import { NgModule } from '@angular/core';
+
+import { Landing<%= classify(name) %>RoutingModule } from './landing-<%= name %>-routing.module';
+import { Landing<%= classify(name) %>Component } from './landing-<%= name %>/landing-<%= name %>.component';
+import { Login<%= classify(name) %>Component } from './login-<%= name %>/login-<%= name %>.component';
+import { Registration<%= classify(name) %>Component } from './registration-<%= name %>/registration-<%= name %>.component';
+import { CodeRegistration<%= classify(name) %>Component } from './registration-<%= name %>/code-registration-<%= name %>/code-registration-<%= name %>.component';
+import { OpenRegistration<%= classify(name) %>Component } from './registration-<%= name %>/open-registration-<%= name %>/open-registration-<%= name %>.component';
+import { RegistrationPupil<%= classify(name) %>Component } from './registration-<%= name %>/registration-pupil-<%= name %>/registration-pupil-<%= name %>.component';
+import { Tokenauth<%= classify(name) %>Component } from './tokenauth-<%= name %>/tokenauth-<%= name %>.component';
+import { Login<%= classify(name) %>Service } from './login-<%= name %>/login-<%= name %>.service';
+import { Registration<%= classify(name) %>Service } from './registration-<%= name %>/registration-<%= name %>.service';
+import { MaterialModule } from '../../shared-modules/material.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { TextMaskModule } from 'angular2-text-mask';
+import { SwiperModule } from 'ngx-swiper-wrapper';
+import { PagesModule } from '../../pages.module';
+import { SharedModule } from '../../../shared/shared.module';
+import { FilterByNamePipe } from '../../../shared/pipes/filter-by-name.pipe';
+
+@NgModule({
+  imports: [
+    MaterialModule,
+    ReactiveFormsModule,
+    TextMaskModule,
+    SwiperModule,
+    PagesModule,
+    SharedModule,
+    Landing<%= classify(name) %>RoutingModule
+  ],
+  declarations: [
+    Landing<%= classify(name) %>Component,
+    Login<%= classify(name) %>Component,
+    Registration<%= classify(name) %>Component,
+    CodeRegistration<%= classify(name) %>Component,
+    OpenRegistration<%= classify(name) %>Component,
+    RegistrationPupil<%= classify(name) %>Component,
+    Tokenauth<%= classify(name) %>Component
+  ],
+  exports: [
+    Landing<%= classify(name) %>Component,
+    RegistrationPupil<%= classify(name) %>Component
+  ],
+  providers: [
+    FilterByNamePipe,
+    Login<%= classify(name) %>Service,
+    Registration<%= classify(name) %>Service
+  ]
+})
+export class Landing<%= classify(name) %>Module { }

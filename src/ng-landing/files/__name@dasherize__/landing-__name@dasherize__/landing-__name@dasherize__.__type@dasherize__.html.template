@@ -1,0 +1,673 @@
+<div class="land-body">
+    <div class="land-main-section-2">
+        <div class="land-content">
+            <div class="land-header-row-2">
+                <a routerLink="/" class="land-header-logo-2 w-inline-block">
+                    <!--<img [ngClass]="routeAnimationsElements" src="/assets/images/landing/ProfLiner_Logo_1.svg" alt="" class="land-logo-2">-->
+                    <div class="profilum_logo">
+                        <img
+                            src="/assets/images/landing/logo.svg"
+                            alt="Profilum logo"
+                        />
+                    </div>
+                </a>
+                <div class="land-header-column">
+                    <a
+                        [ngClass]="routeAnimationsElements"
+                        routerLink="/login-<%= name %>"
+                        class="land-header-button w-button"
+                        >Вход</a
+                    >
+                </div>
+            </div>
+            <div class="land-main-block">
+                <div class="main-block">
+                    <h1 class="land-h1-2" [ngClass]="routeAnimationsElements">
+                        <span class="underline">Профнавигационная</span>
+                        <span class="underline">система</span>
+                    </h1>
+                    <p
+                        class="land-subtitle-h1-2"
+                        [ngClass]="routeAnimationsElements"
+                    >
+                        Помогаем ученикам 7-11 классов выбрать будущую профессию
+                        и построить траекторию для её достижения
+                    </p>
+                    <a
+                        [ngClass]="routeAnimationsElements"
+                        routerLink="/registration-<%= name %>"
+                        class="button land-green-btn w-button"
+                        >Регистрация</a
+                    >
+                    <a
+                        [ngClass]="routeAnimationsElements"
+                        target="_blank"
+                        href="https://docs.google.com/forms/d/e/1FAIpQLScgRnyhooJElW7QV0IYqn7JUUC_Bpi4bLkSpvjobfomUjCEWQ/viewform"
+                        class="button land-green-btn btn-school w-button"
+                        >Зарегистрировать школу</a
+                    >
+                </div>
+                <img
+                    [ngClass]="routeAnimationsElements"
+                    src="/assets/images/landing/land-main-imagepng"
+                    width="699"
+                    srcset="
+                        /assets/images/landing/land-main-image-p-500.png  500w,
+                        /assets/images/landing/land-main-image.png       1398w
+                    "
+                    sizes="(max-width: 479px) 92vw, (max-width: 767px) 81vw, (max-width: 991px) 90vw, 699px"
+                    alt=""
+                    class="land-main-image"
+                />
+            </div>
+        </div>
+    </div>
+    <div class="land-content">
+        <div class="land-advantages-section">
+            <div class="land-advantages-row">
+                <div
+                    class="land-advantages-column"
+                    [ngClass]="routeAnimationsElements"
+                >
+                    <img
+                        src="/assets/images/landing/Idea_big.svg"
+                        alt=""
+                        class="landadvantages-icon"
+                    />
+                    <h3 class="land-advantages-h3">Выявление талантов</h3>
+                    <p class="land-advantages-text">
+                        Доступ к современным инструментам диагностики и
+                        профориентации для учеников 7-11 классов.
+                    </p>
+                </div>
+                <div
+                    class="land-advantages-column"
+                    [ngClass]="routeAnimationsElements"
+                >
+                    <img
+                        src="/assets/images/landing/Chat.svg"
+                        alt=""
+                        class="landadvantages-icon"
+                    />
+                    <h3 class="land-advantages-h3">
+                        Индивидуальные рекомендации
+                    </h3>
+                    <p class="land-advantages-text">
+                        Система поможет максимально эффективно использовать
+                        городскую инфраструктуру для знакомства с перспективными
+                        профессиями.
+                    </p>
+                </div>
+                <div
+                    class="land-advantages-column"
+                    [ngClass]="routeAnimationsElements"
+                >
+                    <img
+                        src="/assets/images/landing/Tie.svg"
+                        alt=""
+                        class="landadvantages-icon"
+                    />
+                    <h3 class="land-advantages-h3">
+                        Прямая связь с работодателями
+                    </h3>
+                    <p class="land-advantages-text">
+                        Возможность для школьников проявить себя и участвовать в
+                        мероприятиях и стажировках от ведущих работодателей.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="land-users-section">
+            <h2 class="land-h2">Для кого этот сервис?</h2>
+            <p class="land-subtitle-h2">
+                Профнавигация - это командная работа. Мы объединяем и создаем
+                ценность для школьников, родителей, учителей и работодателей.
+            </p>
+            <div class="land-user-tabs">
+                <div
+                    class="land-user-tabs-menu"
+                    [ngClass]="routeAnimationsElements"
+                >
+                    <div class="land-user-tabs-menu-row">
+                        <a
+                            [ngClass]="{ 'w--current': swiperIndex == 0 }"
+                            (click)="toggleOverlayControls(0)"
+                            class="land-user-tab-link w-inline-block"
+                        >
+                            <div class="land-user-tab-link-text">
+                                Ученикам и родителям
+                            </div>
+                        </a>
+                        <a
+                            [ngClass]="{ 'w--current': swiperIndex == 1 }"
+                            (click)="toggleOverlayControls(1)"
+                            class="land-user-tab-link w-inline-block w--current"
+                        >
+                            <div class="land-user-tab-link-text">
+                                Учителям и школам
+                            </div>
+                        </a>
+                        <a
+                            [ngClass]="{ 'w--current': swiperIndex == 2 }"
+                            (click)="toggleOverlayControls(2)"
+                            class="land-user-tab-link w-inline-block"
+                        >
+                            <div class="land-user-tab-link-text">
+                                Организациям
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <swiper
+                    [ngClass]="routeAnimationsElements"
+                    #swiperComponent
+                    [config]="swiperConfig"
+                    (indexChange)="swiperIndexChange($event)"
+                    class="professions-row"
+                >
+                    <div class="land-user-tab-pane">
+                        <div class="land-user-row">
+                            <div class="land-user-column _1">
+                                <img
+                                    src="/assets/images/landing/Student.jpg"
+                                    width="319"
+                                    srcset="
+                                        /assets/images/landing/Student-p-500.jpeg 500w,
+                                        /assets/images/landing/Student.jpg        638w
+                                    "
+                                    sizes="(max-width: 767px) 100vw, 319px"
+                                    alt=""
+                                    class="land-user-image"
+                                />
+                            </div>
+                            <div class="land-user-column _2">
+                                <div class="land-user-adv">
+                                    <img
+                                        src="/assets/images/landing/Test.svg"
+                                        alt=""
+                                        class="land-user-adv-icon"
+                                    />
+                                    <div class="land-user-adv-column">
+                                        <h4 class="land-user-h4">
+                                            Диагностика
+                                        </h4>
+                                        <p class="land-user-text">
+                                            Выявление склонностей, интересов,
+                                            сильных сторон.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="land-user-adv">
+                                    <img
+                                        src="/assets/images/landing/Idea.svg"
+                                        alt=""
+                                        class="land-user-adv-icon"
+                                    />
+                                    <div class="land-user-adv-column">
+                                        <h4 class="land-user-h4">
+                                            Рекомендации и построение
+                                            индивидуальной траектории
+                                        </h4>
+                                        <p class="land-user-text">
+                                            Актуальные и перспективные
+                                            профессии, возможности
+                                            дополнительного образования,
+                                            профильные мероприятия и стажировки
+                                            для построения индивидуальной
+                                            траектории.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="land-user-adv">
+                                    <img
+                                        src="/assets/images/landing/Free_work.svg"
+                                        alt=""
+                                        class="land-user-adv-icon"
+                                    />
+                                    <div class="land-user-adv-column">
+                                        <h4 class="land-user-h4">Стажировки</h4>
+                                        <p class="land-user-text">
+                                            Эксклюзивные мероприятия и
+                                            стажировки от ведущих работодателей.
+                                        </p>
+                                        <a
+                                            routerLink="/registration-<%= name %>"
+                                            class="button land-green-btn w-button"
+                                            >Зарегистрироваться</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="land-user-tab-pane">
+                        <div class="land-user-row">
+                            <div class="land-user-column _1">
+                                <img
+                                    src="/assets/images/landing/Teacher.jpg"
+                                    width="440"
+                                    srcset="
+                                        /assets/images/landing/Teacher-p-500.jpeg 500w,
+                                        /assets/images/landing/Teacher-p-800.jpeg 800w,
+                                        /assets/images/landing/Teacher.jpg        880w
+                                    "
+                                    sizes="(max-width: 767px) 100vw, 440px"
+                                    alt=""
+                                    class="land-user-image"
+                                />
+                            </div>
+                            <div class="land-user-column _2">
+                                <div class="land-user-adv">
+                                    <img
+                                        src="/assets/images/landing/Hat.svg"
+                                        alt=""
+                                        class="land-user-adv-icon"
+                                    />
+                                    <div class="land-user-adv-column">
+                                        <h4 class="land-user-h4">
+                                            Актуальные знания по профнавигации
+                                        </h4>
+                                        <p class="land-user-text">
+                                            Информация о перспективных
+                                            профессиях и потребностях городской
+                                            экономики.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="land-user-adv">
+                                    <img
+                                        src="/assets/images/landing/Idea.svg"
+                                        alt=""
+                                        class="land-user-adv-icon"
+                                    />
+                                    <div class="land-user-adv-column">
+                                        <h4 class="land-user-h4">
+                                            Профили талантов
+                                        </h4>
+                                        <p class="land-user-text">
+                                            Аналитика по результатам
+                                            диагностики. Формирование профиля
+                                            талантов класса и школы, информация
+                                            о внеклассной активности учеников.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="land-user-adv">
+                                    <img
+                                        src="/assets/images/landing/Book.svg"
+                                        alt=""
+                                        class="land-user-adv-icon"
+                                    />
+                                    <div class="land-user-adv-column">
+                                        <h4 class="land-user-h4">
+                                            Методическая поддержка
+                                        </h4>
+                                        <p class="land-user-text">
+                                            Материалы для сопровождения
+                                            профориентационной работы,
+                                            индивидуальные рекомендации по
+                                            работе с классом.
+                                        </p>
+                                        <a
+                                            routerLink="/registration-<%= name %>"
+                                            class="button land-green-btn w-button"
+                                            >Зарегистрироваться</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="land-user-tab-pane">
+                        <div class="land-user-row">
+                            <div class="land-user-column _1">
+                                <img
+                                    src="/assets/images/landing/Musinessman.jpg"
+                                    width="287"
+                                    srcset="
+                                        /assets/images/landing/Musinessman-p-500.jpeg 500w,
+                                        /assets/images/landing/Musinessman.jpg        574w
+                                    "
+                                    sizes="(max-width: 767px) 100vw, 287px"
+                                    alt=""
+                                    class="land-user-image"
+                                />
+                            </div>
+
+                            <div class="land-user-column _2">
+                                <div class="land-user-adv">
+                                    <img
+                                        src="/assets/images/landing/Flag.svg"
+                                        alt=""
+                                        class="land-user-adv-icon"
+                                    />
+                                    <div class="land-user-adv-column">
+                                        <h4 class="land-user-h4">
+                                            Продвижение собственных мероприятий
+                                        </h4>
+                                        <p class="land-user-text">
+                                            Таргетированное размещение
+                                            информации о мастер-классах,
+                                            экскурсиях, стажировках.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="land-user-adv">
+                                    <img
+                                        src="/assets/images/landing/Fire.svg"
+                                        alt=""
+                                        class="land-user-adv-icon"
+                                    />
+                                    <div class="land-user-adv-column">
+                                        <h4 class="land-user-h4">
+                                            Активные кадры
+                                        </h4>
+                                        <p class="land-user-text">
+                                            Отбор активных участников системы.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="land-user-adv">
+                                    <img
+                                        src="/assets/images/landing/Like.svg"
+                                        alt=""
+                                        class="land-user-adv-icon"
+                                    />
+                                    <div class="land-user-adv-column">
+                                        <h4 class="land-user-h4">
+                                            Узнаваемость бренда
+                                        </h4>
+                                        <p class="land-user-text">
+                                            Повышение узнаваемости своего HR
+                                            бренда среди молодёжи.
+                                        </p>
+                                        <a
+                                            routerLink="/registration-<%= name %>"
+                                            class="button land-green-btn w-button"
+                                            >Зарегистрироваться</a
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </swiper>
+            </div>
+        </div>
+
+        <div class="land-registration-section">
+            <div class="container-970 w-container">
+                <div class="land-reg-row">
+                    <div class="land-reg-column">
+                        <h2 class="land-h2 reg">Направляйте своего ребёнка</h2>
+                        <p class="land-subtitle-h2 reg">
+                            Узнайте сильные и слабые стороны вашего ребёнка и
+                            получите рекомендации по построению индивидуальной
+                            траектории.
+                        </p>
+                        <a
+                            routerLink="/registration-<%= name %>"
+                            class="button land-green-btn w-button"
+                            >Зарегистрироваться</a
+                        >
+                    </div>
+                    <img
+                        src="/assets/images/landing/reg-image.svg"
+                        alt=""
+                        class="land-reg-image"
+                    />
+                </div>
+            </div>
+        </div>
+        <footer class="land-footer">
+            <div class="w-container footer-container">
+                <div class="footer-sponsors-block">
+                    <div class="footer-information">
+                        <div class="land-footer-text">
+                            © 2019 Профилум.<br />Все права защищены.
+                        </div>
+                        <div>
+                            <div>
+                                <a
+                                    href="/assets/docs/PrivacyPolicy.pdf"
+                                    target="_blank"
+                                    class="land-footer-link"
+                                    >Использование персональных данных</a
+                                >
+                            </div>
+                            <div>
+                                <a
+                                    href="/assets/docs/Agreement.pdf"
+                                    target="_blank"
+                                    class="land-footer-link"
+                                    >Пользовательское соглашение</a
+                                >
+                            </div>
+                        </div>
+                        <div>
+                            <img
+                                src="/assets/images/profilum-logo.svg"
+                                alt="Profilum logo"
+                            />
+                        </div>
+                        <!-- <a class="footer-button-school w-button" target="_blank"
+                href="https://docs.google.com/presentation/d/1gAYPNf0ypIRcSLTvqsFuzFifSh-A5A4zhpHNX3s6QLw/edit"
+                (click)="linkForSchools()">Презентация для школ</a> -->
+                    </div>
+                </div>
+                <div class="footer-contacts">
+                    <div class="land-footer-contacts">
+                        <a
+                            href="mailto:ask@profilum.ru"
+                            class="land-footer-link"
+                            >ask@profilum.ru</a
+                        ><br />
+                        <div class="footer-contacts-small">поддержка</div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-mobile">
+                <div class="footer-mobile-down">
+                    <div class="footer-mobile-info">
+                        <div class="footer-mobile-contacts">
+                            <div>
+                                <a
+                                    href="/assets/docs/PrivacyPolicy.pdf"
+                                    target="_blank"
+                                    class="land-footer-link"
+                                    >Использование персональных данных</a
+                                >
+                            </div>
+                            <div>
+                                <a
+                                    href="/assets/docs/Agreement.pdf"
+                                    target="_blank"
+                                    class="land-footer-link"
+                                    >Пользовательское соглашение</a
+                                >
+                            </div>
+                            <div class="land-footer-text">
+                                © 2019 Профилум.<br />Все права защищены.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-mobile-mails">
+                        <a
+                            href="mailto:ask@profilum.ru"
+                            class="land-footer-link"
+                            >ask@profilum.ru</a
+                        ><br />
+                        <div class="footer-contacts-small">поддержка</div>
+                        <div class="logo_footer profilum_logo">
+                            <img
+                                src="/assets/images/landing/logo.svg"
+                                alt="Profilum logo"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</div>
+<div class="sources lb" [ngClass]="{ show: showPopUp }">
+    <div class="lb-bg"></div>
+    <div class="lb-block sources-lb">
+        <a (click)="showPopUp = !showPopUp" class="close-lb w-inline-block">
+            <img src="/assets/images/landing/close-lb.svg" alt="" />
+        </a>
+        <h3 class="land-sources-heading">Краткий список источников</h3>
+        <div class="sources-row">
+            <div class="sources-column">
+                <div class="sources-block">
+                    <div class="sources-num">1.</div>
+                    <div class="sources-block-col">
+                        <div class="sources-text">
+                            «Прогноз ежегодной дополнительной потребности в
+                            профессиональных кадрах по видам экономической
+                            деятельности» Центра занятости и социальной защиты
+                            населения города Москвы.
+                        </div>
+                    </div>
+                </div>
+                <div class="sources-block">
+                    <div class="sources-num">2.</div>
+                    <div class="sources-block-col">
+                        <div class="sources-text">
+                            «Перечень приоритетных профессий (специальностей) и
+                            направлений для организации профессионального
+                            обучения и дополнительного профессионального
+                            образования» и «Доклад о разработке прогноза
+                            потребности экономики города Москвы в кадрах с
+                            учетом опроса работодателей и крупных инвестиционных
+                            проектов в срок до 2025г.» Департамента труда и
+                            занятости Москвы.
+                        </div>
+                    </div>
+                </div>
+                <div class="sources-block">
+                    <div class="sources-num">3.</div>
+                    <div class="sources-block-col">
+                        <div class="sources-text">
+                            Государственные программы Москвы:
+                        </div>
+                        <ul class="sources-unordered-list">
+                            <li class="sources-list-item">
+                                «Культура Москвы».
+                            </li>
+                            <li class="sources-list-item">
+                                «Развитие транспортной системы».
+                            </li>
+                            <li class="sources-list-item">
+                                «Развитие коммунально-инженерной инфраструктуры
+                                и энергосбережение».
+                            </li>
+                            <li class="sources-list-item">
+                                «Москва - город для бизнеса и инноваций».
+                            </li>
+                            <li class="sources-list-item">
+                                «Столичное здравоохранение».
+                            </li>
+                            <li class="sources-list-item">
+                                «Столичное образование».
+                            </li>
+                            <li class="sources-list-item">
+                                «Информационный город».
+                            </li>
+                            <li class="sources-list-item">
+                                «Безопасный город».
+                            </li>
+                            <li class="sources-list-item">«Спорт Москвы».</li>
+                            <li class="sources-list-item">
+                                «Развитие городской среды».
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="sources-block">
+                    <div class="sources-num">4.</div>
+                    <div class="sources-block-col">
+                        <div class="sources-text">
+                            «Рейтинг топ-50 профессий среднего профессионального
+                            образования» Министерства образования и науки РФ.
+                        </div>
+                    </div>
+                </div>
+                <div class="sources-block">
+                    <div class="sources-num">5.</div>
+                    <div class="sources-block-col">
+                        <div class="sources-text">
+                            «Справочник востребованных на рынке труда, новых и
+                            перспективных профессий» Министерства труда и
+                            социальной защиты РФ.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="sources-column">
+                <div class="sources-block">
+                    <div class="sources-num">6.</div>
+                    <div class="sources-block-col">
+                        <div class="sources-text">
+                            Проект «The future of work» Международной
+                            организации труда.
+                        </div>
+                    </div>
+                </div>
+                <div class="sources-block">
+                    <div class="sources-num">7.</div>
+                    <div class="sources-block-col">
+                        <div class="sources-text">Аналитические доклады:</div>
+                        <ul class="sources-unordered-list">
+                            <li class="sources-list-item">
+                                «Профессии будущей Москвы (2016)» Агентства
+                                инноваций Москвы.
+                            </li>
+                            <li class="sources-list-item">
+                                «Навыки будущего: что нужно знать и уметь в
+                                новом сложном мире» (2017) Global Education
+                                Futures и WorldSkills Russia.
+                            </li>
+                            <li class="sources-list-item">
+                                «Атлас новых профессий» (2016) Агентства
+                                стратегических инициатив.
+                            </li>
+                            <li class="sources-list-item">
+                                «The Future of Jobs» (2016 и 2018) Всемирного
+                                экономического форума
+                            </li>
+                            <li class="sources-list-item">
+                                «The future of work and skills» (2017)
+                                Организации экономического сотрудничества и
+                                развития.
+                            </li>
+                            <li class="sources-list-item">
+                                «Россия 2025: от кадров к талантам» (2017) BCG и
+                                Сбербанк.
+                            </li>
+                            <li class="sources-list-item">
+                                «Будущее рынка труда. Противоборство тенденций,
+                                которые будут формировать рабочую среду в 2030
+                                году» (2018) PWC consulting.
+                            </li>
+                            <li class="sources-list-item">
+                                «Перемены в секторе революционных технологий»
+                                (2018) KPMG.
+                            </li>
+                            <li class="sources-list-item">
+                                «A future that works: automation, employment,
+                                and productivity» (2017) McKinsey and company.
+                            </li>
+                            <li class="sources-list-item">
+                                «Inception Report for the Global Commission on
+                                the Future of Work» (2017) Международной
+                                организации труда.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

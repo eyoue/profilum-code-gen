@@ -1,0 +1,46 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Meta, MetaDefinition } from '@angular/platform-browser';
+import { Registration<%= classify(name) %>Service } from './registration-<%= name %>.service';
+import { REG_EXP } from '../../../../shared/global-constants/reg-exp';
+
+@Component({
+  selector: 'prf-registration-<%= name %>',
+  templateUrl: './registration-<%= name %>.component.html',
+  styleUrls: ['./registration-<%= name %>.component.scss'],
+})
+export class Registration<%= classify(name) %>Component implements OnInit {
+  public isMaskedPassword: boolean = true;
+  public password: string = null;
+  public email: string = null;
+  public enterByCode: boolean = false;
+  private emailPattern: RegExp = REG_EXP.emailRegExp;
+  public registrationFailed: boolean = false;
+  public passFailed: boolean = false;
+  public loginFailed: boolean = false;
+
+  constructor(private meta: Meta,
+              private registrationService: Registration<%= classify(name) %>Service,
+              private router: Router) {
+    this.meta.updateTag({name: 'og:title', content: 'Регистрация'});
+  }
+
+  ngOnInit() {
+  }
+
+  public toggleMask() {
+    this.isMaskedPassword = !this.isMaskedPassword;
+  }
+
+  public isAccessAllowed() {
+    return this.password && this.isValid(this.email);
+  }
+
+  public isValid(email) {
+    return this.emailPattern.test(email);
+  }
+
+  public enterCode() {
+    this.enterByCode = !this.enterByCode;
+  }
+}

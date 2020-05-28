@@ -1,0 +1,73 @@
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Meta, MetaDefinition } from '@angular/platform-browser';
+import { SwiperComponent, SwiperConfigInterface, SwiperDirective } from 'ngx-swiper-wrapper';
+
+import { Router } from '@angular/router';
+import { routeAnimations, ROUTE_ANIMATIONS_ELEMENTS } from 'app/core';
+import { environment } from 'environments/environment';
+
+export const PAGE_SIZE: number = 1;
+
+import { Metrika } from 'ng-yandex-metrika';
+
+@Component({
+  selector: 'prf-landing-<%= name %>',
+  templateUrl: './landing-<%= name %>.component.html',
+  styleUrls: ['./landing-<%= name %>.component.scss'],
+  animations: [routeAnimations],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+export class Landing<%= classify(name) %>Component implements OnInit {
+  routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
+  public swiperConfig: SwiperConfigInterface = {
+    slidesPerView: PAGE_SIZE,
+    slidesPerGroup: PAGE_SIZE,
+    speed: 500
+  };
+  public hideButtonPlay: boolean = true;
+  public type: string = 'component';
+  public swiperIndex: number = 0;
+  public showPopUp: boolean = false;
+  @ViewChild(SwiperDirective) directiveRef?: SwiperDirective;
+  @ViewChild('swiperComponent') swiperComponent?: SwiperComponent;
+  @ViewChild('videoPlayer') videoplayer: any;
+  logo: boolean = false;
+
+  constructor(private meta: Meta,
+    private router: Router,
+    private metrika: Metrika) {
+    this.meta.addTag({ name: 'og:title', content: 'Профилум' });
+  }
+
+  ngOnInit() {
+  }
+
+  public swiperIndexChange(index: number): void {
+    this.swiperIndex = index;
+  }
+
+  public toggleOverlayControls(goto): void {
+    if (this.type === 'directive' && this.directiveRef) {
+      this.directiveRef.setIndex(goto);
+    } else if (this.type === 'component' && this.swiperComponent && this.swiperComponent.directiveRef) {
+      this.swiperComponent.directiveRef.setIndex(goto);
+    }
+  }
+
+  toggleVideo() {
+    if (this.hideButtonPlay) {
+      this.videoplayer.nativeElement.play();
+    } else {
+      this.videoplayer.nativeElement.pause();
+    }
+    this.hideButtonPlay = !this.hideButtonPlay;
+  }
+
+  linkForSchools() {
+    if (environment.analytics) {
+      this.metrika.fireEvent('TEACHER_PRES_OPEN');
+    }
+    // this.router.navigate(['./https://docs.google.com/presentation/d/1gAYPNf0ypIRcSLTvqsFuzFifSh-A5A4zhpHNX3s6QLw/edit']);
+  }
+
+}

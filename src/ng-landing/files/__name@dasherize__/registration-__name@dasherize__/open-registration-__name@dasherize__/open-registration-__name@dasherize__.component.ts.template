@@ -1,0 +1,385 @@
+import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular/core';
+import { Meta, MetaDefinition} from '@angular/platform-browser';
+import { Registration<%= classify(name) %>Service } from '../registration-<%= name %>.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { REG_EXP } from '../../../../../shared/global-constants/reg-exp';
+import { environment } from 'environments/environment';
+import { PrEventsEnums } from 'app/shared/enums/pr-events.enums';
+import { ICity } from '../../../../../shared/interfaces/icity';
+import { IRegion } from 'app/shared/interfaces/iregion';
+import { AdminPanelService } from '../../../../control-panel/admin/admin-panel.service';
+import { RegionsService } from 'app/pages/control-panel/admin/regions/regions.service';
+import { FilterByNamePipe } from '../../../../../shared/pipes/filter-by-name.pipe';
+import { Metrika } from 'ng-yandex-metrika';
+
+@Component({
+  selector: 'prf-open-registration-<%= name %>',
+  templateUrl: './open-registration-<%= name %>.component.html',
+  styleUrls: ['./open-registration-<%= name %>.component.scss']
+})
+export class OpenRegistration<%= classify(name) %>Component implements OnInit {
+  public form: FormGroup;
+  public mask = ['+', '7', ' ', '(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/]
+  public submitted: boolean;
+  public readonly phoneRegExp: RegExp = REG_EXP.phoneRegExp;
+  public readonly emailRegExp: RegExp = REG_EXP.emailRegExp;
+  public readonly testOneLetter: RegExp = REG_EXP.testOneLetter;
+  public readonly testOneDigit: RegExp = REG_EXP.testOneDigit;
+  public readonly testSixCharter: RegExp = REG_EXP.testSixCharter;
+  public readonly testWhiteSpace: RegExp = REG_EXP.testWhiteSpace;
+  public readonly testRusLetters: RegExp = REG_EXP.testRusLetters;
+
+  public focusOutPasswordErrors: boolean = false;
+
+  public isCharactersError: boolean = true;
+  public isLetterError: boolean = true;
+  public isNumberError: boolean = true;
+  public isWhiteSpaceError: boolean = false;
+  public isRusLettersError: boolean = false;
+
+  public isNotValidPassword: boolean = false;
+
+  public role: string = 'parent';
+  public isMaskedPassword: boolean = true;
+
+  public buttonWaiting: boolean = false;
+  public buttonActivated: boolean = false;
+  public buttonActivate: boolean = false;
+
+  public registrationFailed: boolean = false;
+  public passFailed: boolean = false;
+  public loginFailed: boolean = false;
+
+  public personalTerms: boolean = false;
+  public advertisingTerms: boolean = false;
+  public duplicateUserName: boolean = false;
+  public checkEmail: boolean = true;
+  public tag: string = null;
+
+  public regions: IRegion[] = [];
+  public cities: ICity[] = [];
+  public regionCities: ICity[] = [];
+
+  public selectedRegion: IRegion;
+  public selectedCity: ICity;
+
+  public searchRegionName: string;
+  public searchCityName: string;
+
+  @ViewChild('regionFilter') public readonly regionFilter: ElementRef;
+  @ViewChild('regionDrop') public readonly regionDrop: ElementRef;
+  @ViewChild('regionField') public readonly regionField: ElementRef;
+
+  @ViewChild('cityFilter') public readonly cityFilter: ElementRef;
+  @ViewChild('cityDrop') public readonly cityDrop: ElementRef;
+  @ViewChild('cityField') public readonly cityField: ElementRef;
+
+  constructor(private meta: Meta,
+              private regionsService: RegionsService,
+              private registrationService: Registration<%= classify(name) %>Service,
+              private adminPanelService: AdminPanelService,
+              private filterByNamePipe: FilterByNamePipe,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private fb: FormBuilder,
+              private metrika: Metrika) {
+    const componentName: MetaDefinition = {
+      name: 'profliner:title',
+      content: 'Open Registration'
+    };
+    this.meta.addTag(componentName);
+  }
+
+  async ngOnInit() {
+    this.initFormGroup();
+    await this.getRegions();
+    await this.getCities();
+    // Check Tag in URL
+    if (!this.tag) {
+      this.activatedRoute.queryParams.subscribe((params) => {
+        this.tag = params.tag;
+      });
+      // Check if we have this tag type in system
+      if (this.tag != PrEventsEnums.Emailing.toString()) {
+        this.tag = null;
+      }
+    }
+  }
+
+  private initFormGroup() {
+    this.form = this.fb.group({
+      lastName: new FormControl(null, [
+        Validators.required,
+      ]),
+      firstName: new FormControl(null, [
+        Validators.required,
+      ]),
+      middleName: new FormControl(null, [
+        Validators.required,
+      ]),
+      phone: new FormControl(null, [
+        Validators.maxLength(18),
+        Validators.pattern(this.phoneRegExp)
+      ]),
+      region: new FormControl(null, [
+        Validators.required
+      ]),
+      city: new FormControl(null, [
+        Validators.required
+      ]),
+      email: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(this.emailRegExp),
+      ]),
+      password: new FormControl(null, [
+        Validators.required,
+        // Validators.pattern(this.passwordRegExp)
+      ]),
+      role: new FormControl(this.role, [
+        Validators.required
+      ])
+    });
+  }
+
+  async getRegions() {
+    this.regions = (await this.regionsService.getAllRegions()).filter(x => x.hrid != 'defaultRegion');
+  }
+
+  async getCities() {
+    this.cities = await this.adminPanelService.getAllCities();
+  }
+
+  get f() {
+    return this.form.controls;
+  }
+
+  public isAccessAllowed() {
+    return this.f.lastName.value
+      && this.f.firstName.value
+      && this.f.middleName.value
+      && this.f.password.value
+      && this.f.region.value && this.selectedRegion
+      && this.f.city.value && this.selectedCity
+      && this.isValidEmail(this.f.email.value)
+      && this.isValidPassword(this.f.password.value)
+      && this.personalTerms
+  }
+
+  submit() {
+    this.submitted = true;
+    if (this.form.valid) {
+      const credentials = {
+        email: this.f.email.value,
+        lastName: this.f.lastName.value,
+        firstName: this.f.firstName.value,
+        middleName: this.f.middleName.value,
+        password: this.f.password.value,
+        phoneNumber: this.f.phone.value,
+        regionId: this.selectedCity.regionId,
+        municipalityId: this.selectedCity.municipalityId,
+        city: this.f.city.value,
+        role: this.f.role.value,
+        tag: this.tag,
+        isConsentToMailing: this.advertisingTerms
+      };
+      this.registrationFailed = false;
+      this.passFailed = false;
+      this.duplicateUserName = false;
+      this.registrationService.openregistration(credentials).subscribe((response) => {
+        if (response) {
+          if (response.userId == undefined || response.userId == null) {
+            this.duplicateUserName = response.status = !!'Registration failed'; // почта занята
+            this.registrationFailed = true; // ошибка регистрации
+            this.failWaiting()
+          } else {
+            if (environment.analytics) {
+               if (this.tag) {
+                 this.metrika.fireEvent('PARTNER_EMAIL_REGISTRATION');
+               }
+              this.metrika.fireEvent('PARENT_REG');
+            }
+            // Сразу попадаем в ЛК
+            this.registrationService.login(credentials.email, credentials.password, false).subscribe((loginResult) => {
+              if (loginResult) {
+                if (loginResult.succeeded === false) {
+                  this.loginFailed = true;
+                  this.passFailed = true;
+                  return;
+                } else {
+                  localStorage.setItem('userRole', loginResult.role);
+                  localStorage.setItem('userId', loginResult.userId);
+                  localStorage.setItem('isAuthorized', 'true');
+                  switch (loginResult.role) {
+                    case 'parent': {
+                      return this.router.navigate(['/parent']);
+                    }
+                  }
+                }
+              }
+            });
+            this.removeWaiting()
+          }
+        }
+      })
+    } else {
+      this.failWaiting()
+    }
+  }
+
+  public toggleMask() {
+    this.isMaskedPassword = !this.isMaskedPassword;
+  }
+
+  animateLogin() {
+    this.buttonActivate = true;
+    this.buttonWaiting = true;
+    this.submit();
+  }
+
+  removeWaiting() {
+    this.buttonWaiting = false;
+    this.buttonActivated = true;
+  }
+
+  failWaiting() {
+    this.buttonWaiting = false;
+    this.buttonActivate = false;
+  }
+
+
+  private isValidEmail(email: string): boolean {
+    return this.emailRegExp.test(email);
+  }
+
+  public isValidPassword(password: string): boolean {
+    if (password && password.length > 0) {
+      this.updateErrorFlagValues(password);
+      if (this.isAnyPasswordError()) {
+        this.isNotValidPassword = true; // isWhiteSpaceError был без этой записи
+        return false;
+      } else {
+        this.isNotValidPassword = false;
+        return true;
+      }
+    } else {
+      this.setDefaultErrorFlagValues();
+      return false;
+    }
+  }
+
+  private setDefaultErrorFlagValues(): void {
+    this.isWhiteSpaceError = false;
+    this.isCharactersError = true;
+    this.isLetterError = true;
+    this.isNumberError = true;
+    this.isRusLettersError = false;
+  }
+
+  private updateErrorFlagValues(password: string): void {
+    this.isWhiteSpaceError = !this.testWhiteSpace.test(password);
+    this.isCharactersError = !this.testSixCharter.test(password);
+    this.isLetterError = !this.testOneLetter.test(password);
+    this.isNumberError = !this.testOneDigit.test(password);
+    this.isRusLettersError = this.testRusLetters.test(password);
+  }
+
+  public focusOutErrorChecking() {
+    this.focusOutPasswordErrors = this.isAnyPasswordError();
+  }
+
+  // true - one or more password errors
+  private isAnyPasswordError(): boolean {
+    return this.isCharactersError || this.isLetterError || this.isNumberError || this.isRusLettersError || this.isWhiteSpaceError;
+  }
+
+  public checkFormatEmail(event): boolean {
+    if (event) {
+      this.checkEmail = this.emailRegExp.test(this.f.email.value);
+      return;
+    }
+  }
+
+  // REGIONS METHODS
+
+  async setRegion(obj: IRegion) {
+    if (obj != this.selectedRegion) {
+      this.f.city.setValue('');
+      this.regionCities = this.cities.filter(c => c.regionId === obj.id)
+    }
+    this.f.region.setValue(obj.name);
+    this.selectedRegion = obj;
+  }
+
+  getSelectedRegionName(): string {
+    if (this.selectedRegion) {
+      return this.selectedRegion.name;
+    }
+  }
+
+  fieldFocusRegion(e) {
+    if (this.form.value.region) {
+      this.f.region.setValue('');
+    }
+  }
+
+  fieldFocusOutRegion(e) {
+    if (this.selectedRegion) { // выбран регион
+      if (this.selectedRegion.name !== this.f.region.value) { // в строку ввели другое значение
+        this.selectedRegion = null;
+        this.f.city.setValue('');
+        this.selectedCity = null;
+      }
+    }
+  }
+
+  // CITIES METHODS
+
+  setCity(obj: ICity): void {
+    this.f.city.setValue(obj.name);
+    this.selectedCity = obj;
+  }
+
+  getSelectedCityName() {
+    if (this.selectedCity) {
+      return this.selectedCity.name;
+    }
+  }
+
+  fieldFocusCity(e) {
+    if (this.form.value.city) {
+      this.f.city.setValue('');
+    }
+  }
+
+  fieldFocusOutCity(e) {
+    if (this.selectedCity) { // выбран город
+      if (this.selectedCity.name !== this.f.city.value) { // в строку ввели другое значение
+        this.selectedCity = null;
+      }
+    }
+  }
+
+  @HostListener('document:click', ['$event.target'])
+  checkClick(target) {
+    this.showRegionControl(target);
+    if (this.selectedRegion) {
+        this.showCityControl(target);
+    }
+  }
+
+  private showRegionControl(target: any): void {
+    if (!this.regionFilter.nativeElement.contains(target)) {
+      this.regionDrop.nativeElement.classList.remove('w--open');
+      this.regionField.nativeElement.classList.remove('opened');
+    }
+  }
+
+  private showCityControl(target: any): void {
+    if (!this.cityFilter.nativeElement.contains(target)) {
+      this.cityDrop.nativeElement.classList.remove('w--open');
+      this.cityField.nativeElement.classList.remove('opened');
+    }
+  }
+}
+

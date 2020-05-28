@@ -1,0 +1,26 @@
+import { Injectable } from '@angular/core';
+import { HttpService } from 'app/core/services/http.service';
+
+@Injectable()
+export class Login<%= classify(name) %>Service {
+
+  constructor(private http: HttpService) {
+  }
+
+  public async login(login: string, pass: string, rememberMe?: boolean): Promise<any> {
+    localStorage.clear();
+    let credentials = {
+      email: login,
+      password: pass,
+      rememberMe: true,
+    };
+    const response = await this.http.post('/api/v1.0/saas/login', credentials).toPromise();
+    return response;
+  }
+
+  public async tokenLogin(loginToken: string): Promise<any> {
+    localStorage.clear();
+    const response = await this.http.post('/api/v1.0/saas/token_login', loginToken).toPromise();
+    return response;
+  }
+}

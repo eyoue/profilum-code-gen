@@ -1,0 +1,46 @@
+.login-field-column {
+  position: relative;
+}
+
+.w-input[readonly] {
+  background: unset;
+}
+
+.eye {
+  position: absolute;
+  z-index: 100;
+  right: 10px;
+  bottom: 3px;
+  width: 40px;
+  height: 30px;
+  top: 0;
+  background: url(/assets/images/open.png) center no-repeat;
+  cursor: pointer;
+
+  &__closed {
+    background: url(/assets/images/close.png) center no-repeat;
+    position: absolute;
+    z-index: 100;
+    right: 10px;
+    bottom: 3px;
+    width: 40px;
+    height: 30px;
+    top: 0;
+    cursor: pointer;
+  }
+}
+
+.w-form-fail {
+  display: block;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #ffdede;
+}
+
+.short-right{
+  padding-right: 50px;
+}
+
+.error-field {
+  border-bottom-color: #ff5722;
+}

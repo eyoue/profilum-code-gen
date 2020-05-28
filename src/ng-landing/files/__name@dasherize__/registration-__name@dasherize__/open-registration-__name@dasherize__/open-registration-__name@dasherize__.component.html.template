@@ -1,0 +1,246 @@
+<div class="login-section">
+  <div class="login-container">
+    <a routerLink="/" class="login-logo w-inline-block">
+      <img class="login-logo-img" src="/assets/images/profilum-logo.svg" alt="Profilum logo">
+    </a>
+
+    <div class="tabs login w-tabs">
+      <div class="tabs-menu w-tab-menu">
+        <a [routerLink]="['/login-<%= name %>']" class="tab-link login w-inline-block w-tab-link">
+          <div>Вход</div>
+          <img src="/assets/images/angle.png" width="20" class="angle">
+        </a>
+        <a [routerLink]="['/registration-<%= name %>']" class="tab-link login w-inline-block w-tab-link w--current">
+          <div>Регистрация</div>
+          <img src="/assets/images/angle2.png" width="20" class="angle _2">
+        </a>
+      </div>
+
+      <div class="w-tab-pane w--tab-active">
+        <div class="tab-pane login">
+          <div class="user-data-form-block w-form">
+            <form [formGroup]="form" name="wf-form-Login" autocomplete="off">
+              <div class="login-form-row reg-form">
+                <div class="login-form-column">
+                  <a routerLink="/registration-<%= name %>" class="reg-form-back-button">Назад</a>
+                </div>
+                <div class="login-field-column reg-form">
+                  <img src="/assets/images/reg-parent.svg" class="registration-link-image reg-form">
+                  <div class="registration-link-text reg-form">Родитель</div>
+                </div>
+              </div>
+              <div class="login-form-row">
+                <label for="lastName" class="login-label">Фамилия</label>
+                <div class="login-field-column">
+                  <input type="text" autocomplete="off" class="login-field w-input"
+                    [class.error-field]="submitted && f.lastName.errors" maxlength="256" name="lastName"
+                    data-name="lastName" id="lastName" formControlName="lastName">
+                  <ng-container *ngIf="submitted && f.lastName.errors">
+                    <mat-error *ngIf="f.lastName.errors.required">
+                      Заполните поле
+                    </mat-error>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="login-form-row">
+                <label for="firstName" class="login-label">Имя</label>
+                <div class="login-field-column">
+                  <input type="text" autocomplete="off" class="login-field w-input"
+                    [class.error-field]="submitted && f.firstName.errors" maxlength="256" name="firstName"
+                    data-name="firstName" id="firstName" formControlName="firstName">
+                  <ng-container *ngIf="submitted && f.firstName.errors">
+                    <mat-error *ngIf="f.firstName.errors.required">
+                      Заполните поле
+                    </mat-error>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="login-form-row">
+                <label for="middleName" class="login-label">Отчество</label>
+                <div class="login-field-column">
+                  <input type="text" autocomplete="off" class="login-field w-input"
+                    [class.error-field]="submitted && f.middleName.errors" maxlength="256" name="middleName"
+                    data-name="middleName" id="middleName" formControlName="middleName">
+                  <ng-container *ngIf="submitted && f.middleName.errors">
+                    <mat-error *ngIf="f.middleName.errors.required">
+                      Заполните поле
+                    </mat-error>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="login-form-row">
+                <label for="phone" class="login-label">Телефон</label>
+                <div class="login-field-column">
+                  <input type="tel" autocomplete="off" class="login-field w-input"
+                    [class.error-field]="submitted && f.phone.errors" name="phone" data-name="phone" id="phone"
+                    [textMask]="{mask: mask}" formControlName="phone">
+                  <ng-container *ngIf="submitted && f.phone.errors">
+                    <mat-error *ngIf="f.phone.errors.maxLength">
+                      Номер телефона слишком длинный
+                    </mat-error>
+                    <mat-error *ngIf="f.phone.errors.pattern">
+                      Проверьте правильность номера телефона
+                    </mat-error>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="login-form-row">
+                <label for="email" class="login-label">Электронная почта</label>
+                <div class="login-field-column">
+                  <input type="email" autocomplete="off"
+                    class="login-field w-input"
+                    [class.error-field]="submitted && f.email.errors || submitted && duplicateUserName" name="email"
+                    data-name="email" id="email" formControlName="email" (focusout)="checkFormatEmail($event)">
+                  <ng-container>
+                    <mat-error *ngIf="!checkEmail">
+                      Проверьте правильность email
+                    </mat-error>
+                    <mat-error *ngIf="submitted && duplicateUserName">
+                      Такая электронная почта уже зарегистрирована
+                    </mat-error>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="login-form-row">
+                <label for="password" class="login-label">Пароль</label>
+                <div class="form-full-width">
+                  <div class="login-field-column" (focusout)="focusOutErrorChecking()"
+                    (focusin)="focusOutPasswordErrors = false">
+                    <input *ngIf="isMaskedPassword" autocomplete="new-password"  type="password"
+                      class="login-field w-input short-right" [class.error-field]="submitted && f.password.errors"
+                      maxlength="256" name="password" data-name="password" id="password" formControlName="password"
+                      (ngModelChange)="isValidPassword($event)" (focus)="popupPassword.style.display = 'block'"
+                      (focusout)="popupPassword.style.display = 'none'">
+                    <input *ngIf="!isMaskedPassword" autocomplete="new-password"  type="text" class="login-field w-input short-right"
+                      [class.error-field]="submitted && f.password.errors" maxlength="256" name="password"
+                      data-name="password" id="passwordUnMask" formControlName="password"
+                      (ngModelChange)="isValidPassword($event)" (focus)="popupPassword.style.display = 'block'"
+                      (focusout)="popupPassword.style.display = 'none'">
+                    <div [ngClass]="{'eye': !isMaskedPassword, 'eye__closed': isMaskedPassword}" (click)="toggleMask()">
+                    </div>
+                    <div class="info-popup recommendation w-hidden-small w-hidden-tiny hide-popup" #popupPassword
+                      [style.display]="isNotValidPassword ? 'block' : 'none'">
+                      <p>Требования к паролю (не менее)</p>
+                      <ol class="info-exacting">
+                        <li class="info-pswrd-icon info-popup-pswrd" [class.not-correct]="isCharactersError">6
+                          знаков/символов</li>
+                        <li class="info-pswrd-icon info-popup-letter" [class.not-correct]="isLetterError">1 строчная буква
+                        </li>
+                        <li class="info-pswrd-icon info-popup-digit" [class.not-correct]="isNumberError">1 цифра</li>
+                      </ol>
+                      <img src="/assets/images/info-triangle.png" width="12" class="info-triangle">
+                    </div>
+                  </div>
+                  <div class="error-field-container" *ngIf="focusOutPasswordErrors">
+                    <div>Пароль имеет неверный формат:</div>
+                    <ul>
+                      <li *ngIf="isCharactersError">менее 6 знаков/символов</li>
+                      <li *ngIf="isLetterError">нет ни одной строчной буквы</li>
+                      <li *ngIf="isNumberError">нет ни одной цифры</li>
+                      <li *ngIf="isWhiteSpaceError">используются некорректные символы</li>
+                      <li *ngIf="isRusLettersError">используются русские буквы</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="login-form-row">
+                <div>
+                  <label class="login-label">Регион:</label>
+                  <div class="div-space"></div>
+                </div>
+                <div class="dropdown-inline cat" #regionFilter>
+                  <div class="dropdown-inline-container w-dropdown">
+                    <div class="dd-input-field" #regionField
+                      (click)="regionDrop.classList.toggle('w--open'); regionField.classList.toggle('opened')">
+                      <input autocomplete="off" prfNoAutocomplete type="text"
+                        class="login-field w-input" name="region" formControlName="region"
+                        [class.error-field]="submitted && f.region.errors" [class.active]="selectedRegion" [(ngModel)]="searchRegionName"
+                        (focus)="fieldFocusRegion($event)" (focusout)="fieldFocusOutRegion($event)">
+                    </div>
+                    <nav class="dd-prof-filter-list w-dropdown-list" #regionDrop>
+                      <div class="dd-prof-filter-div">
+                        <div class="filter-list-row">
+                          <div class="filter-list-heading">Регион</div>
+                        </div>
+                        <div class="prof-categories-links">
+                          <a class="prof-categories-link w-inline-block"
+                              *ngFor="let region of regions | filterByName : searchRegionName"
+                              [class.dd-inline-current]="getSelectedRegionName() == region.name"
+                              (click)="setRegion(region); regionDrop.classList.remove('w--open'); regionField.classList.remove('opened')">
+                            <div class="category-text-link">{{region.name}}</div>
+                          </a>
+                        </div>
+                      </div>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+
+              <div class="login-form-row" *ngIf="selectedRegion">
+                <div>
+                  <label class="login-label">Город:</label>
+                  <div class="div-space"></div>
+                </div>
+                <div class="dropdown-inline cat" #cityFilter>
+                  <div class="dropdown-inline-container w-dropdown">
+                    <div class="dd-input-field" #cityField
+                      (click)="cityDrop.classList.toggle('w--open'); cityField.classList.toggle('opened')">
+                      <input autocomplete="off" prfNoAutocomplete type="text"
+                        class="login-field w-input" name="city" formControlName="city"
+                        [class.error-field]="submitted && f.city.errors" [class.active]="selectedCity" [(ngModel)]="searchCityName"
+                        (focus)="fieldFocusCity($event)" (focusout)="fieldFocusOutCity($event)">
+                    </div>
+                    <nav class="dd-prof-filter-list w-dropdown-list" #cityDrop>
+                      <div class="dd-prof-filter-div">
+                        <div class="filter-list-row">
+                          <div class="filter-list-heading">Город</div>
+                        </div>
+                        <div class="prof-categories-links">
+                          <a class="prof-categories-link w-inline-block"
+                              *ngFor="let city of regionCities | filterByName : searchCityName"
+                              [class.dd-inline-current]="getSelectedCityName() == city.name"
+                              (click)="setCity(city); cityDrop.classList.remove('w--open'); cityField.classList.remove('opened')">
+                            <div class="category-text-link">{{city.name}}</div>
+                          </a>
+                        </div>
+                      </div>
+                    </nav>
+                  </div>
+                </div>
+            </div>
+              <div class="terms">
+                <div class="checkbox-terms-grn" [class.checked-terms-grn]="personalTerms"
+                  (click)="personalTerms = !personalTerms">
+                </div>
+                <span class="terms-text">Принимаю условия
+                  <a href="/assets/docs/Agreement.pdf" target="_blank">пользовательского
+                    соглашения</a> и даю согласие
+                  на обработку моих
+                  <a href="/assets/docs/PrivacyPolicy.pdf" target="_blank">персональных данных</a>
+                </span>
+              </div>
+              <div class="terms">
+                <div class="checkbox-terms-grn" [class.checked-terms-grn]="advertisingTerms"
+                  (click)="advertisingTerms = !advertisingTerms"></div>
+                <span class="terms-text">Я хочу получать
+                  <a href="/assets/docs/ReceivingAdvertising.pdf" target="_blank">уведомления и рекламные акции</a>
+                </span>
+              </div>
+
+              <div class="w-center-content">
+                <a (click)="animateLogin()" [ngClass]="{'disabled': !isAccessAllowed()}"
+                  [class.btn-waiting]="buttonWaiting" [class.btn-activated]="buttonActivated"
+                  [class.btn-activate]="!buttonActivate" class="button-animate btn-activate" id="btnActivation">
+                  <span class="btn-icon"></span>
+                  <span class="btn-text" data-wait="Подождите" data-after="Зарегистрированы">Зарегистрироваться</span>
+                </a>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

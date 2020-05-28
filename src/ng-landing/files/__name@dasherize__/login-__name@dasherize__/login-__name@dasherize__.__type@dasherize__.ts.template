@@ -1,0 +1,182 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Meta, MetaDefinition } from '@angular/platform-browser';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Login<%= classify(name) %>Service } from './login-<%= name %>.service';
+import { Router } from '@angular/router';
+import { ChangePasswordService } from '../../../settings/change-password/change-password.service';
+import { ProjectVariables } from '../../../../core/project.variables';
+import { PrEventsEnums } from '../../../../shared/enums/pr-events.enums';
+import { CurrentStepService } from '../../../control-panel/pupil/welcome-steps/current-step.service';
+import { OverlayBusyService } from '../../../../shared/overlay-busy/overlay-busy.service';
+import { UserInfoClass } from '../../../../shared/classes/userInfo.class';
+import { SharedService } from '../../../control-panel/shared/shared.service';
+import { REG_EXP } from '../../../../shared/global-constants/reg-exp';
+import { take } from 'rxjs/operators';
+
+@Component({
+  selector: 'prf-login-<%= name %>',
+  templateUrl: './login-<%= name %>.component.html',
+  styleUrls: ['./login-<%= name %>.component.scss'],
+})
+export class Login<%= classify(name) %>Component implements OnInit {
+  public form: FormGroup;
+  public submitted: boolean;
+  public password: string = null;
+  public email: string = null;
+  public buttonWaiting: boolean = false;
+  public buttonActivated: boolean = false;
+  public buttonActivate: boolean = false;
+
+  public isMaskedPassword: boolean = true;
+  public passFailed: boolean = false;
+  public enterByCode: boolean = false;
+  private emailPattern: RegExp = REG_EXP.emailRegExp;
+  public checkEmail: boolean = true;
+
+  constructor(private meta: Meta,
+    private loginService: Login<%= classify(name) %>Service,
+    private overlayService: OverlayBusyService,
+    private changePasswordService: ChangePasswordService,
+    private fb: FormBuilder,
+    private router: Router,
+    private projectVariables: ProjectVariables,
+    private currentStepService: CurrentStepService,
+    private sharedService: SharedService) {
+    this.meta.updateTag({ name: 'og:title', content: 'Вход' });
+  }
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      email: new FormControl(this.email, [
+        Validators.required,
+        Validators.pattern(this.emailPattern)
+      ]),
+      password: new FormControl(this.password, [
+        Validators.required
+      ]),
+    });
+    this.overlayService.hide(); // скрывать overlay *нужно для случаев редиректа на страницу login при ошибках
+  }
+
+  get f() {
+    return this.form.controls;
+  }
+
+  public toggleMask() {
+    this.isMaskedPassword = !this.isMaskedPassword;
+  }
+
+  public isAccessAllowed() {
+    return this.form.value.password && this.isValid(this.form.value.email);
+  }
+
+  public isValid(email) {
+    return this.emailPattern.test(email);
+  }
+
+  public async doLogin() {
+    this.passFailed = false;
+    let loginResult = await this.loginService.login(this.form.value.email, this.form.value.password, false);
+    if (loginResult.succeeded === false) {
+      this.passFailed = true;
+      this.failWaiting();
+      return;
+    } else {
+      localStorage.clear();
+      try {
+        let ui: UserInfoClass = await this.sharedService.getUserInfo();
+        localStorage.setItem('imagePath', ui.imagePath);
+        localStorage.setItem('firstName', ui.firstName);
+        localStorage.setItem('lastName', ui.lastName);
+        localStorage.setItem('schoolId', ui.schoolId);
+        localStorage.setItem('userGender', ui.gender);
+      } catch (error) {
+        // У главного админа нет профиля
+      }
+      localStorage.setItem('userRole', loginResult.role);
+      localStorage.setItem('userId', loginResult.userId);
+      localStorage.setItem('isAuthorized', 'true');
+      switch (loginResult.role) {
+        case 'admin': {
+          this.router.navigate(['/admin/schools']);
+          return;
+        }
+        case 'cityadmin': {
+          this.router.navigate(['/cityadmin']);
+          return;
+        }
+        case 'adminDO': {
+          this.router.navigate(['/adminDO/courses/all-courses']);
+          return;
+        }
+        case 'schooladmin': {
+          this.router.navigate(['/schooladmin/classes']);
+          return;
+        }
+        case 'director': {
+          this.router.navigate(['/director']);
+          return;
+        }
+        case 'teacher': {
+          this.router.navigate(['/teacher']);
+          return;
+        }
+        case 'parent': {
+          this.router.navigate(['/parent']);
+          return;
+        }
+        default:
+          this.removeWaiting();
+          break;
+      }
+
+      const welcomeStep = await this.currentStepService.getCurrentStep();
+      localStorage.setItem('welcomeStep', welcomeStep);
+
+      let reqHandler = this.changePasswordService.getUserSession(loginResult.userId)
+      .pipe(take(1))
+      .subscribe((data) => {
+        let sessionId = data.status == 'Success' || 'Uncompleted test' ? data.sessionId : undefined;
+        if (sessionId) {
+          localStorage.setItem('testSessionId', sessionId);
+          localStorage.setItem('sessionStatus', data.status);
+          if (loginResult.tag == PrEventsEnums[PrEventsEnums.Marathon]) {
+            localStorage.setItem('promoTag', loginResult.tag);  // метка для определения участия пользователя в промо акции
+            return this.router.navigate(['/results-marathon', sessionId]);
+          }
+          this.router.navigate(['/pupil']);
+        } else if (data.status == 'Untested user') {
+          this.router.navigate(['/test-na-professiyu']);
+        }
+      });
+      this.removeWaiting();
+    }
+  }
+
+  public enterCode() {
+    this.enterByCode = !this.enterByCode;
+  }
+
+  animateLogin() {
+    this.buttonActivate = true;
+    this.buttonWaiting = true;
+    this.doLogin();
+  }
+
+  removeWaiting() {
+    this.buttonWaiting = false;
+    this.buttonActivated = true;
+  }
+
+  failWaiting() {
+    this.buttonWaiting = false;
+    this.buttonActivate = false;
+  }
+
+  public checkFormatEmail(event): boolean {
+    if (event) {
+      this.checkEmail = this.emailPattern.test(this.form.value.email);
+      return;
+    }
+  }
+}

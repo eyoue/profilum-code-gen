@@ -1,0 +1,128 @@
+.eye {
+  position: absolute;
+  z-index: 100;
+  right: 10px;
+  bottom: 3px;
+  width: 43px;
+  height: 43px;
+  background: url(/assets/images/open.png) center no-repeat;
+  cursor: pointer;
+  &__closed {
+    background: url(/assets/images/close.png) center no-repeat;
+    position: absolute;
+    z-index: 100;
+    right: 10px;
+    bottom: 3px;
+    width: 43px;
+    height: 43px;
+    cursor: pointer;
+  }
+}
+
+.error {
+  margin-top: -20px;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1.25;
+  text-align: left;
+  color: #f35269;
+}
+
+p {
+  margin: 0 auto 10px auto;
+  text-align: center;
+  input {
+    padding: 10px;
+    border-radius: 5px;
+  }
+}
+.registration-container{
+    background-size: cover;
+    background: url("/assets/images/pattern-background.svg") no-repeat center center fixed;
+}
+.registration {
+  width: 256px;
+  margin: 0 auto;
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    line-height: 1.11;
+    text-align: center;
+    color: #353535;
+    margin-bottom: 28px;
+  }
+  &__item {
+    margin: 0 0 25px 0;
+    position: relative;
+  }
+  &__label {
+    opacity: 0.7;
+    font-size: 18px;
+    text-align: left;
+    color: #000000;
+    display: block;
+    margin-bottom: 9px;
+  }
+  &__input {
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    height: 48px;
+  }
+  &__span {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.29;
+    text-align: left;
+    color: #646568;
+    display: block;
+    margin-top: 3px;
+  }
+  &__code {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.29;
+    text-align: left;
+    color: #646568;
+    display: block;
+    margin-top: 3px;
+  }
+  &__code:hover {
+    color: #e64c19;
+  }
+  &__code:active {
+    color: #2ae619;
+  }
+  &__recovery {
+    opacity: 0.7;
+    font-size: 18px;
+    text-align: left;
+    color: #000000;
+    margin-top: 3px;
+    display: inline-block;
+  }
+  &__enter {
+    width: 256px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: #0db5fc;
+    font-size: 18px;
+    line-height: 38px;
+    text-align: center;
+    color: #ffffff;
+    display: block;
+    margin-top: 33px;
+    text-decoration: none;
+    &:hover {
+      background-color: #009fe3;
+    }
+    &.disabled {
+      background-color: rgba(196, 196, 196, 0.2);
+      pointer-events: none;
+    }
+  }
+}
+
+input.wrong_input {
+  border-color: #f35269;
+}

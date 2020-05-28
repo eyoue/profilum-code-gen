@@ -1,0 +1,308 @@
+.professions-dropdown {
+  z-index: unset !important;
+}
+
+.dd-prof-filter-list {
+  z-index: 99999;
+}
+
+.w-input[readonly] {
+  background: unset;
+}
+
+.eye {
+  position: absolute;
+  z-index: 100;
+  right: 10px;
+  bottom: 3px;
+  width: 40px;
+  height: 30px;
+  top: 0;
+  background: url(/assets/images/open.png) center no-repeat;
+  cursor: pointer;
+
+  &__closed {
+    background: url(/assets/images/close.png) center no-repeat;
+    position: absolute;
+    z-index: 100;
+    right: 10px;
+    bottom: 3px;
+    width: 40px;
+    height: 30px;
+    top: 0;
+    cursor: pointer;
+  }
+}
+
+.user-data-field {
+  position: relative;
+}
+
+.school-dd-tgl {
+  max-width: 235px;
+  overflow: hidden;
+}
+
+.school-text {
+  overflow: hidden;
+}
+
+.letters-dd-column {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.info-popup.recommendation {
+  width: 250px;
+  font-size: 13px;
+}
+
+ol.info-exacting {
+  margin-left: 0;
+  padding-left: 0;
+
+  li {
+    list-style-type: none;
+  }
+}
+
+.info-exacting {
+  .info-pswrd-icon {
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    background: url(/assets/images/checkIcon-green.svg) no-repeat left;
+  }
+
+  .info-pswrd-icon.not-correct {
+    background: url(/assets/images/checkIcon-gray.svg) no-repeat left;
+  }
+}
+
+.error-field-container {
+  font-size: 13px;
+  line-height: 16px;
+  color: #F44336;
+  font-weight: 500;
+  margin: 8px 0;
+
+  ul {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 15px;
+
+    li {
+      list-style-type: disc;
+    }
+  }
+}
+
+.column {
+  flex-direction: column;
+}
+
+.addition-row {
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.addition-dd-block {
+  width: 100%;
+}
+
+.login-label-full {
+  position: relative;
+  width: 100%;
+  padding-right: 0;
+  padding-top: 0;
+}
+
+.profile-password-block {
+  width: 230px;
+}
+
+.center-dd-block {
+  height: 0;
+  visibility: hidden;
+  transition: height, 0.5s linear;
+}
+
+.center-dd-block.open {
+  width: 100%;
+  height: 40px;
+  visibility: visible;
+  transition: height, .5s linear;
+  margin: 15px 0;
+  //overflow-y: auto;
+}
+
+.label-arrow-icon {
+  margin-left: 12px;
+  transition: transform .5s ease-in-out;
+}
+
+.label-arrow-icon.opened {
+  transform: rotate(180deg);
+}
+
+.institution-dd-block {
+  position: absolute;
+  width: 79.4%;
+}
+
+.dd-inline-filter-block {
+  height: 350px;
+}
+
+
+/* NEW STYLE DD */
+.institution-dd-filter {
+  height: 250px;
+}
+
+.dropdown-inline.cat {
+  width: 100%;
+  display: flex;
+  padding-right: 10px;
+  align-items: center;
+}
+
+.dropdown-inline-container {
+  z-index: unset;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.dropdown-inline {
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.dropdown-inline.cat {
+  padding-right: 0;
+}
+
+.dropdown-toggle-inline {
+  border-bottom: 2px solid rgba(53, 53, 53, 0.1);
+  width: 100%;
+  padding: 5px 45px 5px 0;
+  font-size: 15px;
+}
+
+.dd-inline-title {
+  line-height: normal;
+  color: #353535;
+  opacity: 0.2;
+}
+
+.dd-inline-title.active-title {
+  color: rgb(34, 34, 34);
+  opacity: 1;
+}
+
+.dd-icon-inline {
+  transition: transform .5s ease-in-out;
+  margin-right: 0;
+  font-size: 15px;
+  color: rgb(196, 196, 196);
+}
+
+.dd-icon-inline.addition {
+  color: #9375fb;
+}
+
+.dd-icon-inline.opened {
+  transform: rotate(180deg);
+}
+
+.hide-popup {
+  display: none;
+}
+
+.dd-inline-current {
+  color: #9375fb;
+}
+
+.dd-input-field {
+  &:hover {
+    .dd-icon-inline {
+      color: #5d7aff;
+    }
+  }
+
+  &:focus {
+    .dd-icon-inline {
+      color: #9375fb;
+    }
+  }
+}
+
+.dd-container {
+  width: 100%;
+  display: flex;
+  position: relative;
+}
+
+.dd-prof-filter-div {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.dropdown-inline.dd-padding-r {
+  padding-right: 20px;
+}
+
+.dropdown-inline.dd-padding-l {
+  padding-left: 20px;
+}
+
+.login-field::-webkit-input-placeholder {
+  color: rgba(53, 53, 53, .2);
+}
+
+.dd-toggle-isclass {
+  position: absolute;
+  top: 40px;
+}
+
+.dd-input-field {
+  position: relative;
+}
+
+.dd-input-field:before {
+  transition: transform .2s ease-in-out;
+  font-family: 'webflow-icons' !important;
+  content: "\e603";
+  position: absolute;
+  top: 8px;
+  right: 0;
+  bottom: 0;
+  font-size: 15px;
+  color: rgb(196, 196, 196);
+  width: 1em;
+  height: 1em;
+}
+
+.dd-input-field:hover {
+  &:before {
+    color: #5d7aff;
+  }
+
+  &:focus {
+    color: #9375fb;
+  }
+}
+
+.dd-input-field.opened:before {
+  transform: rotate(180deg);
+}
+
+.short-right{
+  padding-right: 50px;
+}
+
+.error-field {
+  border-bottom-color: #ff5722;
+}

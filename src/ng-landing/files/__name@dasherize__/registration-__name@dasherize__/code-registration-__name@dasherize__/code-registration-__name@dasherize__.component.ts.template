@@ -1,0 +1,217 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Meta } from '@angular/platform-browser';
+import { Registration<%= classify(name) %>Service } from '../registration-<%= name %>.service';
+import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { PrEventsEnums } from 'app/shared/enums/pr-events.enums';
+import { REG_EXP } from '../../../../../shared/global-constants/reg-exp';
+import { environment } from 'environments/environment';
+
+import { Metrika } from 'ng-yandex-metrika';
+
+@Component({
+  selector: 'prf-code-registration-<%= name %>',
+  templateUrl: './code-registration-<%= name %>.component.html',
+  styleUrls: ['./code-registration-<%= name %>.component.scss']
+})
+export class CodeRegistration<%= classify(name) %>Component implements OnInit, OnDestroy {
+  public form: FormGroup;
+  public submitted: boolean;
+  public isMaskedPassword: boolean = true;
+  public password: string = null;
+  public email: string = null;
+  private emailPattern: RegExp = REG_EXP.emailRegExp;
+  public passFailed: boolean = false;
+  public loginFailed: boolean = false;
+  public enterByCode: boolean = false;
+  public registrationPupil: boolean;
+  public registrationTeacher: boolean;
+  public registrationOther: boolean;
+  public buttonWaiting: boolean = false;
+  public buttonActivated: boolean = false;
+  public buttonActivate: boolean = false;
+  public tglRegistration: boolean = false;
+  public duplicateUserName: boolean = false;
+  public registrationOpen: boolean = false;
+  public personalTerms: boolean = false;
+  public advertisingTerms: boolean = false;
+  public checkEmail: boolean = true;
+  public tag: string = null;
+
+  constructor(private meta: Meta,
+              private registrationService: Registration<%= classify(name) %>Service,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private fb: FormBuilder,
+              private metrika: Metrika) {
+    this.meta.updateTag({name: 'og:title', content: 'Регистрация по коду'});
+    router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        switch (event.url) {
+          case '/registration-pupil': {
+            this.personalTerms = true;
+            return this.registrationPupil = true;
+          }
+          case '/registration-teacher': {
+            return this.registrationTeacher = true;
+          }
+          case '/registration-other': {
+            return this.registrationOther = true;
+          }
+          default: {
+            this.personalTerms = true;
+            return this.registrationPupil = true;
+          }
+        }
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.form = this.fb.group({
+      email: new FormControl(this.email, [
+        Validators.required,
+        Validators.pattern(this.emailPattern)
+      ]),
+      password: new FormControl(this.password, [
+        Validators.required,
+      ]),
+    });
+    // Check Tag in URL
+    if (!this.tag) {
+      this.activatedRoute.queryParams.subscribe((params) => {
+        this.tag = params.tag;
+      });
+      // Check if we have this tag type in system
+      if (this.tag != PrEventsEnums.Emailing.toString()) {
+        this.tag = null;
+      }
+    }
+  }
+
+  get f() {
+    return this.form.controls;
+  }
+
+  public toggleMask() {
+    this.isMaskedPassword = !this.isMaskedPassword;
+  }
+
+  public isAccessAllowed() {
+    return this.form.value.password && this.isValid(this.form.value.email) && this.personalTerms;
+  }
+
+  public isValid(email) {
+    return this.emailPattern.test(email);
+  }
+
+  public toggleRegistration() {
+    this.tglRegistration = !this.tglRegistration;
+    this.registrationOpen = !this.registrationOpen
+  }
+
+  async doRegistration() {
+    this.submitted = true;
+    if (this.form.valid) {
+      this.passFailed = false;
+      this.duplicateUserName = false;
+
+      await this.registrationService.registration(this.form.value.email, this.form.value.password, this.advertisingTerms).then(async (response) => {
+        if (response === 'ALREADY_EXIST') {
+          this.duplicateUserName = true; // почта занята
+          this.failWaiting();
+          return;
+        } else {
+          // Сразу попадаем в ЛК
+          this.registrationService.login(this.form.value.email, this.form.value.password, false).subscribe((loginResult) => {
+            if (loginResult) {
+              if (loginResult.succeeded === false) {
+                this.loginFailed = true;
+                this.passFailed = true;
+                this.removeWaiting();
+                return;
+              } else {
+                localStorage.setItem('userRole', loginResult.role);
+                localStorage.setItem('userId', loginResult.userId);
+                localStorage.setItem('isAuthorized', 'true');
+                switch (loginResult.role) {
+                  case 'admin': {
+                    // Пока нет пользователя с ролью админ, переходим просто /admin
+                    this.router.navigate(['/admin/schools']);
+                    return;
+                  }
+                  case 'cityadmin': {
+                    this.router.navigate(['/cityadmin']);
+                    return;
+                  }
+                  case 'adminDO': {
+                    this.router.navigate(['/adminDO/courses/all-courses']);
+                    return;
+                  }
+                  case 'schooladmin': {
+                    this.router.navigate(['/schooladmin/classes']);
+                    return;
+                  }
+                  case 'director': {
+                    this.router.navigate(['/director']);
+                    return;
+                  }
+                  case 'teacher': {
+                    this.router.navigate(['/teacher']);
+                    return;
+                  }
+                  case 'pupil': {
+                    if (environment.analytics) {
+                      this.metrika.fireEvent('PUPIL_CODE_REG');
+                    }
+                    this.router.navigate(['/pupil']);
+                    return;
+                  }
+                }
+              }
+            }
+          });
+            this.removeWaiting();
+           }
+      })
+    } else {
+      this.failWaiting()
+    }
+  }
+
+  animateLogin() {
+    this.buttonActivate = true;
+    this.buttonWaiting = true;
+    this.doRegistration();
+  }
+
+  removeWaiting() {
+    this.buttonWaiting = false;
+    this.buttonActivated = true;
+  }
+
+  failWaiting() {
+    this.buttonWaiting = false;
+    this.buttonActivate = false;
+  }
+
+  accessFormRole(): boolean {
+    if (this.registrationTeacher) {
+      return true;
+    } else if (this.registrationOther) {
+      return true;
+    } else {
+      return this.registrationPupil && this.tglRegistration;
+    }
+  }
+
+  public checkFormatEmail(event): boolean {
+    if (event) {
+      this.checkEmail = this.emailPattern.test(this.form.value.email);
+      return;
+    }
+  }
+
+  ngOnDestroy() {
+  }
+}

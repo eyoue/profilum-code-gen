@@ -1,0 +1,161 @@
+.login-field-column {
+  position: relative;
+}
+
+.w-input[readonly] {
+  background: unset;
+}
+
+.eye {
+  position: absolute;
+  z-index: 100;
+  right: 10px;
+  bottom: 3px;
+  width: 40px;
+  height: 30px;
+  top: 0;
+  background: url(/assets/images/open.png) center no-repeat;
+  cursor: pointer;
+
+  &__closed {
+    background: url(/assets/images/close.png) center no-repeat;
+    position: absolute;
+    z-index: 100;
+    right: 10px;
+    bottom: 3px;
+    width: 40px;
+    height: 30px;
+    top: 0;
+    cursor: pointer;
+  }
+}
+
+.error-field {
+  border-bottom-color: #ff5722;
+}
+
+.form-full-width {
+  width: 100%;
+}
+
+.info-popup.recommendation {
+  width: 250px;
+  font-size: 13px;
+}
+
+ol.info-exacting {
+  margin-left: 0;
+  padding-left: 0;
+
+  li {
+    list-style-type: none;
+  }
+}
+
+.info-exacting {
+  .info-pswrd-icon {
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    background: url(/assets/images/checkIcon-green.svg) no-repeat left;
+  }
+
+  .info-pswrd-icon.not-correct {
+    background: url(/assets/images/checkIcon-gray.svg) no-repeat left;
+  }
+}
+
+.error-field-container {
+  font-size: 13px;
+  line-height: 16px;
+  color: #F44336;
+  font-weight: 500;
+  margin: 8px 0;
+
+  ul {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-left: 15px;
+
+    li {
+      list-style-type: disc;
+    }
+  }
+}
+
+.short-right {
+  padding-right: 50px;
+}
+
+
+
+.dd-toggle-isclass {
+  position: absolute;
+  top: 40px;
+}
+
+.dd-input-field {
+  position: relative;
+}
+
+.dd-input-field:before {
+  transition: transform .2s ease-in-out;
+  font-family: 'webflow-icons' !important;
+  content: "\e603";
+  position: absolute;
+  top: 8px;
+  right: 0;
+  bottom: 0;
+  font-size: 15px;
+  color: rgb(196, 196, 196);
+  width: 1em;
+  height: 1em;
+}
+
+.dd-input-field:hover {
+  &:before {
+    color: #5d7aff;
+  }
+
+  &:focus {
+    color: #9375fb;
+  }
+}
+
+.dd-input-field.opened:before {
+  transform: rotate(180deg);
+}
+
+
+.dropdown-inline.cat {
+  width: 100%;
+  display: flex;
+  padding-right: 10px;
+  align-items: center;
+}
+
+.dropdown-inline-container {
+  z-index: unset;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.dropdown-inline {
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.dropdown-inline.cat {
+  padding-right: 0;
+}
+
+.dd-prof-filter-list {
+  z-index: 99999;
+}
+
+.dd-prof-filter-div {
+  max-height: 300px;
+  overflow-y: auto;
+}

@@ -1,0 +1,62 @@
+<div class="login-section">
+  <div class="login-container">
+    <a routerLink="/" class="login-logo w-inline-block">
+      <img class="login-logo-img" src="/assets/images/profilum-logo.svg" alt="Profilum logo">
+    </a>
+    <div class="tabs login w-tabs">
+      <div class="tabs-menu w-tab-menu">
+        <a [routerLink]="['/login-<%= name %>']" [routerLinkActive]="['w--current']"
+          class="tab-link login w-inline-block w-tab-link">
+          <div>Вход</div>
+          <img src="/assets/images/angle.png" width="20" class="angle">
+        </a>
+        <a [routerLink]="['/registration-<%= name %>']" [routerLinkActive]="['w--current']"
+          class="tab-link login w-inline-block w-tab-link">
+          <div>Регистрация</div>
+          <img src="/assets/images/angle2.png" width="20" class="angle _2">
+        </a>
+      </div>
+
+      <div class="w-tab-pane w--tab-active">
+        <div class="tab-pane login">
+          <div class="registration-row">
+            <div class="registration-column">
+              <a [routerLink]="['/registration-parent-<%= name %>']" class="registration-link w-inline-block">
+                <img src="/assets/images/reg-parent.svg" class="registration-link-image">
+                <div class="registration-link-text">Родитель</div>
+              </a>
+            </div>
+            <div class="registration-column">
+              <a [routerLink]="['/registration-pupil-<%= name %>']" class="registration-link w-inline-block">
+                <img src="/assets/images/reg-student.svg" class="registration-link-image">
+                <div class="registration-link-text">Ученик</div>
+              </a>
+            </div>
+            <div class="registration-column">
+              <a [routerLink]="['/registration-teacher-<%= name %>']" class="registration-link w-inline-block">
+                <img src="/assets/images/reg-teacher.svg" class="registration-link-image">
+                <div class="registration-link-text">Учитель</div>
+              </a>
+            </div>
+            <div class="registration-column">
+              <!--<a [routerLink]="['/registration-other-<%= name %>']" class="registration-link w-inline-block">-->
+              <a href="https://goo.gl/forms/jAG1nLhIRcJnXtSA2" class="registration-link w-inline-block">
+                <img src="/assets/images/reg-other.svg" class="registration-link-image">
+                <div class="registration-link-text">Организация</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!--
+    <div class="policy-text">
+      Нажимая «Зарегистрироваться», вы соглашаетесь с&nbsp;
+      <a href="/assets/docs/PersonalData.pdf" target="_blank">политикой&nbsp;конфиденциальности</a>,&nbsp;
+      <a href="/assets/docs/TermsOfUse.pdf" target="_blank">пользовательским&nbsp;соглашением</a> и&nbsp;
+      <a href="/assets/docs/ReceivingAdvertising.pdf" target="_blank">согласием получения рекламы</a>
+    </div>
+    -->
+  </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="overlay" *ngIf="showMessage">
+  <div class="alert-message">
+    <div class="show-panel">
+      {{alertMessage}}
+    </div>
+    <div class="buttons">
+      <a routerLink="/" class="toHome button">На главную</a>
+      <a routerLink="/login-<%= name %>" class="toLogin button">Логин</a>
+    </div>
+  </div>
+</div>

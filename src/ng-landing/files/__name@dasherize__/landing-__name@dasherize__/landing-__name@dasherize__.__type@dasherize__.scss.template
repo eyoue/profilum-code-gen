@@ -1,0 +1,356 @@
+// @import "../../../styles/webflow.component";
+// @import "../../../styles/pasport-talantov.webflow.component";
+
+.land-body {
+  background-color: #fff;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spin {
+  animation-name: spin;
+  animation-duration: 4000ms;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-play-state: running;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  @media (max-width: 835px) {
+    display: none;
+  }
+}
+
+.footer-sponsors-block {
+  width: 80%;
+  margin-right: 5%;
+  @media (max-width: 940px) {
+    margin-right: 0;
+  }
+}
+
+.footer-sponsors {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  img {
+    width: 30%;
+  }
+}
+
+.footer-information {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  align-items: center;
+  div {
+    margin-right: 20px;
+  }
+  .profilum-logo {
+    width: 125px;
+  }
+}
+
+.div-divider {
+  height: 2px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  background: rgb(136, 73, 247);
+  border-radius: 100px;
+}
+
+
+.footer-contacts-small {
+  line-height: normal;
+  font-size: 13px;
+  color: #353535;
+  opacity: 0.5;
+}
+
+.footer-map {
+  display: block;
+  margin-top: 13px;
+  line-height: normal;
+  font-size: 15px;
+}
+
+.footer-button-school {
+  background-color: #8849F7;
+  border-radius: 5px;
+  max-width: 125px;
+  text-align: center;
+  height: 41px;
+  font-size: 12px;
+  padding: 5px;
+  line-height: 15px;
+
+  &:hover {
+    color: #FFF;
+  }
+}
+
+.land-phone {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.footer-contacts {
+  display: flex;
+  align-items: center;
+  .land-footer-link {
+    line-height: 30px;
+  }
+}
+
+
+@media (max-width: 1080px) {
+  .land-footer-text {
+    font-size: 12px;
+  }
+  .land-footer-link {
+    font-size: 12px;
+  }
+  .footer-map {
+    font-size: 12px;
+  }
+  @media (max-width: 900px) {
+    .footer-sponsors img {
+      width: 25%;
+    }
+    .land-footer-text {
+      font-size: 10px;
+    }
+    .land-footer-link {
+      font-size: 10px;
+    }
+    .footer-map {
+      font-size: 10px;
+    }
+    .footer-contacts-small {
+      font-size: 10px;
+    }
+    .land-phone {
+      font-size: 20px;
+    }
+  }
+}
+
+.footer-mobile {
+  display: none;
+  @media (max-width: 834px) {
+    display: block;
+  }
+
+  .footer-mobile-logo {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+
+    img {
+      max-width: 100px;
+    }
+  }
+
+  .footer-mobile-down {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .footer-mobile-info {
+    margin-right: 5%;
+    .footer-mobile-contacts {
+      .land-footer-link {
+        line-height: normal;
+        font-size: 12px;
+        color: #353535;
+      }
+
+      .land-phone {
+        line-height: normal;
+        font-size: 14px;
+        color: #353535;
+        margin-top: 12px;
+        margin-bottom: 12px;
+      }
+
+      .footer-map {
+        line-height: normal;
+        font-size: 12px;
+      }
+
+      .land-footer-text {
+        margin-top: 15px;
+        line-height: normal;
+        font-size: 12px;
+        text-align: left;
+        color: #353535;
+        opacity: 0.5;
+      }
+    }
+  }
+
+  .footer-mobile-mails {
+    .land-footer-link {
+      line-height: normal;
+      font-size: 12px;
+      color: #000;
+    }
+
+    .footer-contacts-small {
+      font-size: 15px;
+      color: #353535;
+      opacity: 0.5;
+      margin-bottom: 10px;
+    }
+
+    .profilum-logo {
+      max-width: 130px;
+    }
+  }
+
+  .div-divider-horizontal {
+    margin: 0 10px;
+    height: 150px;
+    width: 2px;
+    background: #8849f7;
+    border-radius: 100px;
+    transform: rotate(0deg);
+  }
+}
+
+.btn-school {
+  margin-left: 16px;
+  color: #353535 !important;
+  box-shadow: 0px 5px 20px rgba(53, 53, 53, 0.1) !important;
+  background-color: #FFF !important;
+}
+
+@media (max-width: 425px) {
+  .land-main-image {
+    display: none;
+  }
+  .btn-school {
+    margin-left: 0;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+}
+
+.land-footer-btn {
+  background-color: #8849F7;
+  display: inline-block;
+  color: #FFF;
+  border-radius: 5px;
+  max-width: 125px;
+  text-align: center;
+  font-size: 12px;
+  padding: 5px;
+  line-height: 15px;
+
+  &:hover {
+    color: #FFF;
+  }
+}
+
+.land-img-profilum {
+  width: 135px;
+}
+
+.land-img-aip {
+  width: 165px;
+}
+
+.land-img-rnchk {
+  width: 130px;
+}
+
+.land-header-logo {
+  flex-wrap: wrap;
+}
+
+.profilum_logo {
+  img {
+    display: block;
+    width: 200px;
+    height: auto;
+    @media screen and (max-width: 835px) {
+      width: 150px;
+    }
+    @media screen and (max-width: 425px) {
+      width: 115px;
+    }
+  }
+}
+
+@keyframes is-active {
+  0% {
+    fill: auto;
+  }
+  5% {
+    fill: rgba(245, 245, 245, 0.70);
+  }
+  100% {
+    fill: auto;
+  }
+}
+
+#logo {
+  margin: 0 auto;
+}
+
+.logo__active {
+  #prf-first-polygon {
+    animation: is-active 4s infinite;
+    animation-delay: 0s;
+  }
+  #prf-second-polygon {
+    animation: is-active 4s infinite;
+    animation-delay: .1s;
+  }
+  #prf-third-polygon {
+    animation: is-active 4s infinite;
+    animation-delay: .1s;
+  }
+  #prf-four-polygon {
+    animation: is-active 4s infinite;
+    animation-delay: .2s;
+  }
+  #prf-five-polygon {
+    animation: is-active 4s infinite;
+    animation-delay: .3s;
+  }
+  #prf-six-polygon {
+    animation: is-active 4s infinite;
+    animation-delay: .4s;
+  }
+}
+
+
+.professions-row {
+  padding-bottom: 60px;
+}
+
+.land-advantages-section {
+  padding-bottom: 20px;
+}
+.land-advantages-row {
+  padding-bottom: 10px;
+}
+
