@@ -31,14 +31,14 @@ The generated module is located in the module where we specify
 npm i profilum-code-gen
 ```
 
-###How use
+### How use
 ```
 ng g profilum-code-gen:ng-landing --name=moscow --module=landing.module
 ```
 And generator maintain many params (from ng g component|service|module), but it's successor angular schematics.
 
 
-###Available params
+### Available params
 | First Header  | Second Header |
 | ------------- | ------------- |
 | flat  | boolean  |
