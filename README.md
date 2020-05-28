@@ -33,7 +33,7 @@ npm i profilum-code-gen
 
 ###How use
 ```
-ng g generator:ng-landing --name=moscow --module=landing.module
+ng g profilum-code-gen:ng-landing --name=moscow --module=landing.module
 ```
 And generator maintain many params (from ng g component|service|module), but it's successor angular schematics.
 
