@@ -3,14 +3,7 @@ import { Meta, MetaDefinition} from '@angular/platform-browser';
 import { Registration<%= classify(name) %>Service } from '../registration-<%= name %>.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { REG_EXP } from '../../../../../shared/global-constants/reg-exp';
 import { environment } from 'environments/environment';
-import { PrEventsEnums } from 'app/shared/enums/pr-events.enums';
-import { ICity } from '../../../../../shared/interfaces/icity';
-import { IRegion } from 'app/shared/interfaces/iregion';
-import { AdminPanelService } from '../../../../control-panel/admin/admin-panel.service';
-import { RegionsService } from 'app/pages/control-panel/admin/regions/regions.service';
-import { FilterByNamePipe } from '../../../../../shared/pipes/filter-by-name.pipe';
 import { Metrika } from 'ng-yandex-metrika';
 
 @Component({

@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Meta, MetaDefinition } from '@angular/platform-browser';
 import { Registration<%= classify(name) %>Service } from './registration-<%= name %>.service';
-import { REG_EXP } from '../../../../shared/global-constants/reg-exp';
 
 @Component({
   selector: 'prf-registration-<%= name %>',

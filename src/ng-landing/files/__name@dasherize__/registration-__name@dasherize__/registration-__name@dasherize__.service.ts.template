@@ -1,7 +1,6 @@
 import {map} from 'rxjs/operators';
 import {Injectable} from '@angular/core';
 import {HttpService} from 'app/core/services/http.service';
-import {SchoolClassesClass} from '../../../../shared/classes/school-classes.class';
 
 @Injectable()
 export class Registration<%= classify(name) %>Service {

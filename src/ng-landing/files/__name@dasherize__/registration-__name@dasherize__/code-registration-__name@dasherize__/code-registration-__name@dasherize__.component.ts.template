@@ -4,9 +4,7 @@ import { Registration<%= classify(name) %>Service } from '../registration-<%= na
 import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { PrEventsEnums } from 'app/shared/enums/pr-events.enums';
-import { REG_EXP } from '../../../../../shared/global-constants/reg-exp';
 import { environment } from 'environments/environment';
-
 import { Metrika } from 'ng-yandex-metrika';
 
 @Component({

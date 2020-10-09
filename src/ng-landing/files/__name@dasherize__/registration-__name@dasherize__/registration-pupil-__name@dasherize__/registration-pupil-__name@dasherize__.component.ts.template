@@ -3,20 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { Registration<%= classify(name) %>Service } from '../registration-<%= name %>.service';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { ChildrenAddService } from '../../../../control-panel/parent/children-add/children-add.service';
-import { PrEventsEnums } from '../../../../../shared/enums/pr-events.enums';
-import { environment } from '../../../../../../environments/environment';
-import { SCHOOL_NUMBERS } from '../../../../../shared/global-constants/school-numbers';
-import { SCHOOL_LETTERS } from '../../../../../shared/global-constants/school-letters';
-import { SchoolClassesClass } from '../../../../../shared/classes/school-classes.class';
-import { AdminPanelService } from '../../../../control-panel/admin/admin-panel.service';
-import { REG_EXP } from '../../../../../shared/global-constants/reg-exp';
-import { ICity } from 'app/shared/interfaces/icity';
-import { IRegion } from 'app/shared/interfaces/iregion';
-import { RegionsService } from 'app/pages/control-panel/admin/regions/regions.service';
-import { FilterSchoolsPipe } from 'app/pages/control-panel/parent/children-add/filter-schools.pipe';
-import { FilterByNamePipe } from '../../../../../shared/pipes/filter-by-name.pipe';
-
 import { Metrika } from 'ng-yandex-metrika';
 
 @Component({

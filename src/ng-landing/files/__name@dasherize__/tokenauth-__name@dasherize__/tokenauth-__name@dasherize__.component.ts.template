@@ -3,15 +3,6 @@ import { Meta } from '@angular/platform-browser';
 import { Registration<%= classify(name) %>Service } from '../registration-<%= name %>/registration-<%= name %>.service';
 import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
 import { HttpClientJsonpModule, HttpClientModule, HttpClient } from '@angular/common/http';
-import { Login<%= classify(name) %>Service } from '../login-<%= name %>/login-<%= name %>.service';
-import { SharedService } from '../../../control-panel/shared/shared.service';
-import { UserInfoClass } from '../../../../shared/classes/userInfo.class';
-import { CurrentStepService } from '../../../control-panel/pupil/welcome-steps/current-step.service';
-import { ChangePasswordService } from '../../../settings/change-password/change-password.service';
-import { ProjectVariables } from '../../../../core/project.variables';
-import { PrEventsEnums } from '../../../../shared/enums/pr-events.enums';
-
-import { OverlayBusyService } from '../../../../shared/overlay-busy/overlay-busy.service';
 import { take } from 'rxjs/operators';
 
 

@@ -1,9 +1,16 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Meta, MetaDefinition } from '@angular/platform-browser';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Login<%= classify(name) %>Service } from './login-<%= name %>.service';
+import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
+
 @Component({
   selector: 'prf-login-<%= name %>',
   templateUrl: './login-<%= name %>.component.html',
   styleUrls: ['./login-<%= name %>.component.scss'],
 })
-export class Login<%= classify(name) %>Component extends LoginBase {
+export class Login<%= classify(name) %>Component extends LoginBase<Login<%= classify(name) %>Service> {
   constructor(
     meta: Meta,
     translateService: TranslateService,
