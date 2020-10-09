@@ -23,38 +23,71 @@
         <div class="w-tab-pane w--tab-active">
           <div class="tab-pane login">
             <div class="user-data-form-block w-form">
-
-              <form [formGroup]="form" (keyup.enter)="doLogin()" autocomplete="false">
+               <form [formGroup]="form" (keyup.enter)="onClickLogin()" autocomplete="false">
                 <div class="login-form-row">
-                  <label for="email" class="login-label">Электронная почта</label>
+                  <label for="email" class="login-label">{{ 'LOGIN_KZ.EMAIL' | translate }}</label>
                   <div class="login-field-column">
-                    <input type="email" autocomplete="false" class="login-field w-input" maxlength="256" name="email"
-                      data-name="email" id="email" [class.error-field]="submitted && f.email.errors"
-                      formControlName="email" (focusout)="checkFormatEmail($event)">
-                    <mat-error *ngIf="!checkEmail">
-                      Проверьте правильность email
+                    <input
+                      type="email"
+                      autocomplete="false"
+                      class="login-field w-input"
+                      maxlength="256"
+                      name="email"
+                      data-name="email"
+                      id="email"
+                      [class.error-field]="!loginForm.email['focused'] && isLoginInvalid"
+                      (focusin)="loginForm.email['focused'] = true"
+                      (focusout)="loginForm.email['focused'] = false"
+                      formControlName="email"
+                    />
+                    <mat-error *ngIf="!loginForm.email['focused'] && isLoginInvalid">
+                      {{ 'SHARED.FORM.CHECK_EMAIL' | translate }}
                     </mat-error>
                   </div>
                 </div>
                 <div class="login-form-row">
-                  <label for="password" class="login-label">Пароль</label>
+                  <label for="password" class="login-label">{{
+                    'SHARED.FORM.PASSWORD' | translate
+                  }}</label>
                   <div class="login-field-column">
-                    <input type="password" autocomplete="false" class="login-field w-input" maxlength="256"
-                      name="password" data-name="password" id="password"
-                      [class.error-field]="submitted && f.password.errors" formControlName="password">
-                    <mat-error *ngIf="passFailed">
-                      Неверный логин / пароль
+                    <input
+                      type="password"
+                      autocomplete="false"
+                      class="login-field w-input"
+                      maxlength="256"
+                      name="password"
+                      data-name="password"
+                      id="password"
+                      [class.error-field]="!loginForm.password['focused'] && isPasswordInvalid"
+                      (focusin)="loginForm.password['focused'] = true"
+                      (focusout)="loginForm.password['focused'] = false"
+                      formControlName="password"
+                    />
+                    <mat-error *ngIf="!loginForm.password['focused'] && isPasswordInvalid">
+                      {{ 'LOGIN_KZ.INCORRECT_PASSWORD' | translate }}
                     </mat-error>
-                    <div class="under-field-text">Вместо пароля можете использовать ваш код доступа</div>
+                    <div class="under-field-text">
+                      {{ 'LOGIN_KZ.ACCESS_CODE' | translate }}
+                    </div>
                   </div>
                 </div>
-
                 <div class="w-center-content">
-                  <a (click)="animateLogin()" [ngClass]="{'disabled': !isAccessAllowed()}"
-                    [class.btn-waiting]="buttonWaiting" [class.btn-activated]="buttonActivated"
-                    [class.btn-activate]="!buttonActivate" class="button-animate btn-activate" id="btnActivation">
+                  <a
+                    (click)="animateLogin()"
+                    [ngClass]="{disabled: isAccessDenied}"
+                    [class.btn-waiting]="buttonStates.waiting"
+                    [class.btn-activated]="buttonStates.activated"
+                    [class.btn-activate]="!buttonStates.active"
+                    class="button-animate btn-activate"
+                    id="btnActivation"
+                  >
                     <span class="btn-icon"></span>
-                    <span class="btn-text" data-wait="Подождите" data-after="Вход">Войти</span>
+                    <span
+                      class="btn-text"
+                      data-wait="Подождите"
+                      [attr.data-after]="'SHARED.ENTRANCE' | translate"
+                      >{{ 'LOGIN_KZ.ENTER' | translate }}</span
+                    >
                   </a>
                 </div>
               </form>
