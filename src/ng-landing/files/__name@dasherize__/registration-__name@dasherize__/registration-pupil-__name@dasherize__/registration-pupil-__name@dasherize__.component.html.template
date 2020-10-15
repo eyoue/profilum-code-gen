@@ -2,37 +2,63 @@
   <div class="profile-data-wrapper">
     <div class="profile-data-row">
       <div>
-        <label for="lastName" class="login-label">Фамилия:</label>
+        <label for="lastName" class="login-label">{{ 'SHARED.FORM.FAMILY' | translate }}:</label>
         <div class="div-space"></div>
       </div>
       <div class="profile-field-div">
-        <input type="text" autocomplete="off" prfNoAutocomplete class="login-field w-input"
-          [class.error-field]="submitted && f.lastName.errors" name="lastName" data-name="lastName" id="lastName"
-          formControlName="lastName">
+        <input
+          type="text"
+          autocomplete="off"
+          prfNoAutocomplete
+          class="login-field w-input"
+          [class.error-field]="submitted && f.lastName.errors"
+          name="lastName"
+          data-name="lastName"
+          id="lastName"
+          formControlName="lastName"
+        />
       </div>
     </div>
 
     <div class="profile-data-row">
       <div>
-        <label for="firstName" class="login-label">Имя:</label>
+        <label for="firstName" class="login-label">{{ 'SHARED.FORM.NAME' | translate }}:</label>
         <div class="div-space"></div>
       </div>
       <div class="profile-field-div">
-        <input type="text" autocomplete="off" prfNoAutocomplete class="login-field w-input"
-          [class.error-field]="submitted && f.firstName.errors" name="firstName" data-name="firstName" id="firstName"
-          formControlName="firstName">
+        <input
+          type="text"
+          autocomplete="off"
+          prfNoAutocomplete
+          class="login-field w-input"
+          [class.error-field]="submitted && f.firstName.errors"
+          name="firstName"
+          data-name="firstName"
+          id="firstName"
+          formControlName="firstName"
+        />
       </div>
     </div>
 
     <div class="profile-data-row">
       <div>
-        <label for="middleName" class="login-label">Отчество:</label>
+        <label for="middleName" class="login-label"
+          >{{ 'SHARED.FORM.MIDDLENAME' | translate }}:</label
+        >
         <div class="div-space"></div>
       </div>
       <div class="profile-field-div">
-        <input type="text" autocomplete="off" prfNoAutocomplete class="login-field w-input"
-          [class.error-field]="submitted && f.middleName.errors" name="middleName" data-name="middleName"
-          id="middleName" formControlName="middleName">
+        <input
+          type="text"
+          autocomplete="off"
+          prfNoAutocomplete
+          class="login-field w-input"
+          [class.error-field]="submitted && f.middleName.errors"
+          name="middleName"
+          data-name="middleName"
+          id="middleName"
+          formControlName="middleName"
+        />
       </div>
     </div>
 
@@ -42,73 +68,137 @@
         <div class="div-space"></div>
       </div>
       <div class="profile-field-div">
-        <input type="text" autocomplete="off" prfNoAutocomplete class="login-field w-input"
-          [class.error-field]="submitted && f.date.errors" [textMask]="{mask: dateMask}" name="date" data-name="date"
-          id="date" formControlName="date" (focusin)="checkBirthday = false;" (focusout)="checkFormatDate($event)">
+        <input
+          type="text"
+          autocomplete="off"
+          prfNoAutocomplete
+          class="login-field w-input"
+          [class.error-field]="submitted && f.date.errors"
+          [textMask]="{mask: dateMask}"
+          name="date"
+          data-name="date"
+          id="date"
+          formControlName="date"
+          (focusin)="checkBirthday = false"
+          (focusout)="checkFormatDate($event)"
+        />
         <ng-container *ngIf="checkBirthday">
           <mat-error *ngIf="isNotEnoughYears && !f.date.errors">
-            Учеников моложе 14 лет регистрирует родитель или учитель
+            {{ 'REGISTRATION_PUPIL_KZ.FORM_ALERT.REGISTER_BY_TEACHER' | translate }}
           </mat-error>
           <mat-error *ngIf="f.date.errors">
-            Проверьте правильность введенных данных
+            {{ 'REGISTRATION_PUPIL_KZ.FORM_ALERT.CHECK_DATA' | translate }}
           </mat-error>
         </ng-container>
       </div>
     </div>
 
     <div class="profile-data-row">
-      <label for="email" class="login-label">Электронная почта:</label>
+      <label for="email" class="login-label">{{ 'LOGIN_KZ.EMAIL' | translate }}:</label>
       <div class="profile-field-div">
-        <input type="email" autocomplete="off" prfNoAutocomplete
+        <input
+          type="email"
+          autocomplete="off"
+          prfNoAutocomplete
           class="login-field w-input"
-          [class.error-field]="submitted && f.email.errors || submitted && duplicateUserName" name="email"
-          data-name="email" id="email" formControlName="email" (focusout)="checkFormatEmail($event)">
+          [class.error-field]="(submitted && f.email.errors) || (submitted && duplicateUserName)"
+          name="email"
+          data-name="email"
+          id="email"
+          formControlName="email"
+          (focusout)="checkFormatEmail($event)"
+        />
         <ng-container>
           <mat-error *ngIf="!checkEmail">
-            Проверьте правильность email
+            {{ 'SHARED.FORM.CHECK_EMAIL' | translate }}
           </mat-error>
           <mat-error *ngIf="submitted && duplicateUserName">
-            Такая электронная почта уже зарегистрирована
+            {{ 'REGISTRATION_PUPIL_KZ.FORM_ALERT.EMAIL_EXIST' | translate }}
           </mat-error>
         </ng-container>
       </div>
     </div>
 
     <div class="profile-data-row">
-      <label for="password" class="login-label">Пароль:</label>
+      <label for="password" class="login-label">{{ 'SHARED.FORM.PASSWORD' | translate }}:</label>
       <div>
-        <div class="profile-field-div profile-password-block" (focusout)="focusOutErrorChecking()"
-          (focusin)="focusOutPasswordErrors = false">
-          <input *ngIf="isMaskedPassword" type="password" autocomplete="new-password"
-            class="login-field w-input short-right" [class.error-field]="submitted && f.password.errors"
-            maxlength="256" name="password" data-name="password" id="password" formControlName="password"
-            (ngModelChange)="isValidPassword($event)" (focus)="popupPassword.style.display = 'block'"
-            (blur)="popupPassword.style.display = 'none'">
-          <input *ngIf="!isMaskedPassword" autocomplete="new-password"
-            type="text" class="login-field w-input short-right" [class.error-field]="submitted && f.password.errors"
-            maxlength="256" data-name="password" name="password" id="passwordUnMask" formControlName="password"
-            (ngModelChange)="isValidPassword($event)" (focus)="popupPassword.style.display = 'block'"
-            (blur)="popupPassword.style.display = 'none'">
-          <div [ngClass]="{'eye': !isMaskedPassword, 'eye__closed': isMaskedPassword}" (click)="toggleMask()"></div>
-          <div class="info-popup recommendation w-hidden-small w-hidden-tiny hide-popup" #popupPassword
-            [style.display]="isNotValidPassword ? 'block' : 'none'">
+        <div
+          class="profile-field-div profile-password-block"
+          (focusout)="focusOutErrorChecking()"
+          (focusin)="focusOutPasswordErrors = false"
+        >
+          <input
+            *ngIf="isMaskedPassword"
+            type="password"
+            autocomplete="new-password"
+            class="login-field w-input short-right"
+            [class.error-field]="submitted && f.password.errors"
+            maxlength="256"
+            name="password"
+            data-name="password"
+            id="password"
+            formControlName="password"
+            (ngModelChange)="isValidPassword($event)"
+            (focus)="popupPassword.style.display = 'block'"
+            (blur)="popupPassword.style.display = 'none'"
+          />
+          <input
+            *ngIf="!isMaskedPassword"
+            autocomplete="new-password"
+            type="text"
+            class="login-field w-input short-right"
+            [class.error-field]="submitted && f.password.errors"
+            maxlength="256"
+            data-name="password"
+            name="password"
+            id="passwordUnMask"
+            formControlName="password"
+            (ngModelChange)="isValidPassword($event)"
+            (focus)="popupPassword.style.display = 'block'"
+            (blur)="popupPassword.style.display = 'none'"
+          />
+          <div
+            [ngClass]="{eye: !isMaskedPassword, eye__closed: isMaskedPassword}"
+            (click)="toggleMask()"
+          ></div>
+          <div
+            class="info-popup recommendation w-hidden-small w-hidden-tiny hide-popup"
+            #popupPassword
+            [style.display]="isNotValidPassword ? 'block' : 'none'"
+          >
             <p>Требования к паролю (не менее)</p>
             <ol class="info-exacting">
-              <li class="info-pswrd-icon info-popup-pswrd" [class.not-correct]="isCharactersError">6 знаков/символов</li>
-              <li class="info-pswrd-icon info-popup-letter" [class.not-correct]="isLetterError">1 строчной буквы</li>
-              <li class="info-pswrd-icon info-popup-digit" [class.not-correct]="isNumberError">1 цифры</li>
+              <li class="info-pswrd-icon info-popup-pswrd" [class.not-correct]="isCharactersError">
+                {{ 'OPEN_REGISTRATION_KZ.FORM_ALERT.6_CHARACTERS' | translate }}
+              </li>
+              <li class="info-pswrd-icon info-popup-letter" [class.not-correct]="isLetterError">
+                {{ 'REGISTRATION_PUPIL_KZ.FORM_ALERT.1_LETTER' | translate }}
+              </li>
+              <li class="info-pswrd-icon info-popup-digit" [class.not-correct]="isNumberError">
+                {{ 'REGISTRATION_PUPIL_KZ.FORM_ALERT.1_DIGIT' | translate }}
+              </li>
             </ol>
-            <img src="/assets/images/info-triangle.png" width="12" class="info-triangle" alt="">
+            <img src="/assets/images/info-triangle.png" width="12" class="info-triangle" alt="" />
           </div>
         </div>
         <div class="error-field-container" *ngIf="focusOutPasswordErrors">
-          <div>Пароль имеет неверный формат:</div>
+          <div>{{ 'OPEN_REGISTRATION_KZ.FORM_ALERT.INCORRECT_FORMAT' | translate }}</div>
           <ul>
-            <li *ngIf="isCharactersError">менее 6 знаков/символов</li>
-            <li *ngIf="isLetterError">нет ни одной строчной буквы</li>
-            <li *ngIf="isNumberError">нет ни одной цифры</li>
-            <li *ngIf="isWhiteSpaceError">используются некорректные символы</li>
-            <li *ngIf="isRusLettersError">используются русские буквы</li>
+            <li *ngIf="isCharactersError">
+              {{ 'OPEN_REGISTRATION_KZ.FORM_ALERT.LESS_6_CHARACTERS' | translate }}
+            </li>
+            <li *ngIf="isLetterError">
+              {{ 'OPEN_REGISTRATION_KZ.FORM_ALERT.NO_LOWERCASE_LETTER' | translate }}
+            </li>
+            <li *ngIf="isNumberError">
+              {{ 'OPEN_REGISTRATION_KZ.FORM_ALERT.NO_DIGIT' | translate }}
+            </li>
+            <li *ngIf="isWhiteSpaceError">
+              {{ 'OPEN_REGISTRATION_KZ.FORM_ALERT.INCORRECT_CHARACTERS' | translate }}
+            </li>
+            <li *ngIf="isRusLettersError">
+              {{ 'OPEN_REGISTRATION_KZ.FORM_ALERT.RUS_LETTERS' | translate }}
+            </li>
           </ul>
         </div>
       </div>
@@ -122,209 +212,129 @@
       <prf-gender-toggle formControlName="gender"></prf-gender-toggle>
     </div>
 
+    <prf-dropdown-with-search
+      *ngIf="regionsView.length"
+      formControlName="region"
+      [label]="'SHARED.REGION' | translate"
+      [options]="regionsView"
+      (ngModelChange)="f.city.reset()"
+      [isError]="submitted && f.region.errors"
+    ></prf-dropdown-with-search>
 
-    <div class="profile-data-row">
-      <div>
-        <label class="login-label">Регион:</label>
-        <div class="div-space"></div>
-      </div>
-      <div class="dropdown-inline cat" #regionFilter>
-        <div class="dropdown-inline-container w-dropdown">
-          <div class="dd-input-field" #regionField
-            (click)="regionDrop.classList.toggle('w--open'); regionField.classList.toggle('opened')">
-            <input autocomplete="off" prfNoAutocomplete type="text"
-              class="login-field w-input" name="region" formControlName="region"
-              [class.error-field]="submitted && f.region.errors" [class.active]="selectedRegion" [(ngModel)]="searchRegionName"
-              (focus)="fieldFocusRegion($event)" (focusout)="fieldFocusOutRegion($event)">
-          </div>
-          <nav class="dd-prof-filter-list w-dropdown-list" #regionDrop>
-            <div class="dd-prof-filter-div">
-              <div class="filter-list-row">
-                <div class="filter-list-heading">Регион</div>
-              </div>
-              <div class="prof-categories-links">
-                <a class="prof-categories-link w-inline-block"
-                    *ngFor="let region of regions | filterByName : searchRegionName"
-                    [class.dd-inline-current]="getSelectedRegionName() == region.name"
-                    (click)="setRegion(region); regionDrop.classList.remove('w--open'); regionField.classList.remove('opened')">
-                  <div class="category-text-link">{{region.name}}</div>
-                </a>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </div>
-    </div>
+    <prf-dropdown-with-search
+      *ngIf="f.region.value"
+      formControlName="city"
+      [label]="'SHARED.FORM.CITY' | translate"
+      [options]="citiesView"
+      (ngModelChange)="f.school.reset()"
+      [isError]="submitted && f.city.errors"
+    ></prf-dropdown-with-search>
 
-    <div class="profile-data-row" *ngIf="selectedRegion">
-      <div>
-        <label class="login-label">Город:</label>
-        <div class="div-space"></div>
-      </div>
-      <div class="dropdown-inline cat" #cityFilter>
-        <div class="dropdown-inline-container w-dropdown">
-          <div class="dd-input-field" #cityField
-            (click)="cityDrop.classList.toggle('w--open'); cityField.classList.toggle('opened')">
-            <input autocomplete="off" prfNoAutocomplete type="text"
-              class="login-field w-input" name="city" formControlName="city"
-              [class.error-field]="submitted && f.city.errors" [class.active]="selectedCity" [(ngModel)]="searchCityName"
-              (focus)="fieldFocusCity($event)" (focusout)="fieldFocusOutCity($event)">
-          </div>
-          <nav class="dd-prof-filter-list w-dropdown-list" #cityDrop>
-            <div class="dd-prof-filter-div">
-              <div class="filter-list-row">
-                <div class="filter-list-heading">Город</div>
-              </div>
-              <div class="prof-categories-links">
-                <a class="prof-categories-link w-inline-block"
-                    *ngFor="let city of regionCities | filterByName : searchCityName"
-                    [class.dd-inline-current]="getSelectedCityName() == city.name"
-                    (click)="setCity(city); cityDrop.classList.remove('w--open'); cityField.classList.remove('opened')">
-                  <div class="category-text-link">{{city.name}}</div>
-                </a>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </div>
-    </div>
+    <prf-dropdown-with-search
+      *ngIf="f.city.value"
+      formControlName="school"
+      [label]="'SHARED.FORM.SCHOOL' | translate"
+      [options]="schoolView"
+      (ngModelChange)="
+        f.school.value && [
+          getSchoolClassBySchool(f.school.value.data.id),
+          f.schoolClass.reset(),
+          f.schoolClassNumber.reset(),
+          f.schoolClassNumber.reset()
+        ]
+      "
+      [isError]="submitted && f.school.errors"
+    ></prf-dropdown-with-search>
 
-    <div class="profile-data-row" *ngIf="selectedCity">
-      <div>
-        <label class="login-label">Школа:</label>
-        <div class="div-space"></div>
-      </div>
-      <div class="dropdown-inline cat column" #schoolFilter>
-        <div class="dropdown-inline-container w-dropdown">
-          <div class="dd-input-field" #schoolField
-            (click)="schoolDrop.classList.toggle('w--open'); schoolField.classList.toggle('opened')">
-            <input autocomplete="off" prfNoAutocomplete type="text" class="login-field w-input" name="school"
-              placeholder="Номер или название школы" formControlName="school"
-              [class.error-field]="submitted && f.school.errors" [class.active]="selectedSchoolName" [(ngModel)]="searchSchoolName"
-              (focus)="fieldFocusSchool($event)" (focusout)="fieldFocusOutSchool($event)">
-          </div>
-          <nav class="dd-prof-filter-list w-dropdown-list" #schoolDrop>
-            <div class="dd-prof-filter-div _2 metro-filter-div dd-inline-filter-block">
-              <div class="scroll-block">
-                <div class="prof-categories-links">
-                  <a class="event-categories-link w-inline-block"
-                    *ngFor="let school of schoolsFiltered | filterSchools : searchSchoolName"
-                    (click)="setSchool(school); schoolDrop.classList.remove('w--open'); schoolField.classList.remove('opened')"
-                    [class.dd-inline-current]="schoolsFiltered.indexOf(school.value) !== -1">
-                    <div class="category-text-link">{{school.viewValue}}</div>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </nav>
-        </div>
-      </div>
-    </div>
-
-    <div class="profile-data-row" *ngIf="selectedCity && selectedSchoolName">
+    <div class="profile-data-row" *ngIf="f.school.value">
       <div>
         <label class="login-label">Класс:</label>
         <div class="div-space"></div>
       </div>
       <div class="dd-container">
-        <div class="dropdown-inline cat" #classesFilter *ngIf="isClasses">
-          <div class="dropdown-inline-container w-dropdown">
-            <div class="dd-input-field" #classesField
-              (click)="classesDrop.classList.toggle('w--open'); classesField.classList.toggle('opened')">
-              <input autocomplete="off" prfNoAutocomplete type="text" class="login-field w-input" name="schoolClass"
-                placeholder="Название класса" formControlName="schoolClass"
-                [class.error-field]="submitted && f.schoolClass.errors" [class.active]="selectedSchoolClassName"
-                (focus)="fieldFocusNumber($event, true)" (focusout)="fieldFocusOutNumber($event, true)">
-            </div>
-            <nav class="dd-prof-filter-list w-dropdown-list" #classesDrop>
-              <div class="dd-prof-filter-div">
-                <div class="filter-list-row">
-                  <div class="filter-list-heading">Существующие классы</div>
-                </div>
-                <div class="prof-categories-links child-dropdown-column">
-                  <a class="prof-categories-link w-inline-block" *ngFor="let classe of classes"
-                    (click)="setNumber(classe, true); classesDrop.classList.remove('w--open'); classesField.classList.remove('opened')"
-                    [class.dd-inline-current]="classes.indexOf(classe.number) !== -1">
-                    <div class="category-text-link">{{classe.number}}{{classe.letter}}</div>
-                  </a>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
+        <prf-dropdown-with-search
+          *ngIf="isClasses"
+          class="dropdown-inline cat"
+          formControlName="schoolClass"
+          [label]="'Класс'"
+          [type]="1"
+          [options]="schoolClassView"
+          [isError]="submitted && f.schoolClass.errors"
+        ></prf-dropdown-with-search>
 
-        <div class="dropdown-inline cat dd-padding-r" #numberFilter *ngIf="!isClasses">
-          <div class="dropdown-inline-container w-dropdown">
-            <div class="dd-input-field" #numberField
-              (click)="numberDrop.classList.toggle('w--open'); numberField.classList.toggle('opened')">
-              <input autocomplete="off" prfNoAutocomplete type="text" class="login-field w-input" placeholder="Цифра"
-                name="schoolClassNumber" formControlName="schoolClassNumber"
-                [class.error-field]="submitted && f.schoolClassNumber.errors" [class.active]="selectedNumber"
-                (focus)="fieldFocusNumber($event)" (focusout)="fieldFocusOutNumber($event)">
-            </div>
-            <nav class="dd-prof-filter-list w-dropdown-list" #numberDrop>
-              <div class="dd-prof-filter-div">
-                <div class="filter-list-row">
-                  <div class="filter-list-heading">Цифра</div>
-                </div>
-                <div class="prof-categories-links child-dropdown-column">
-                  <a class="prof-categories-link w-inline-block" *ngFor="let number of numbersClass"
-                    (click)="setNumber(number); numberDrop.classList.remove('w--open'); numberField.classList.remove('opened')"
-                    [class.dd-inline-current]="numbersClass.indexOf(number.value) !== -1">
-                    <div class="category-text-link">{{number.value}}</div>
-                  </a>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
+        <prf-dropdown-with-search
+          *ngIf="!isClasses"
+          class="dropdown-inline cat dd-padding-r"
+          formControlName="schoolClassNumber"
+          [label]="'Номер'"
+          [type]="1"
+          [options]="schoolClassNumber"
+          [isError]="submitted && f.schoolClassNumber.errors"
+        ></prf-dropdown-with-search>
 
-        <div class="dropdown-inline cat dd-padding-l" #letterFilter *ngIf="!isClasses">
-          <div class="dropdown-inline-container w-dropdown">
-            <div class="dd-input-field" #letterField
-              (click)="letterDrop.classList.toggle('w--open'); letterField.classList.toggle('opened')">
-              <input autocomplete="off" prfNoAutocomplete type="text" class="login-field w-input" placeholder="Буква"
-                name="schoolClassLetter" formControlName="schoolClassLetter"
-                [class.error-field]="submitted && f.schoolClassLetter.errors" [class.active]="selectedLetter"
-                (focus)="fieldFocusLetter($event)" (focusout)="fieldFocusOutLetter($event)">
-            </div>
-            <nav class="dd-prof-filter-list w-dropdown-list" #letterDrop>
-              <div class="dd-prof-filter-div">
-                <div class="filter-list-row">
-                  <div class="filter-list-heading">Буква</div>
-                </div>
-                <div class="prof-categories-links child-dropdown-column letters-dd-column">
-                  <a class="prof-categories-link w-inline-block" *ngFor="let letter of lettersClass"
-                    (click)="setLetter(letter); letterDrop.classList.remove('w--open'); letterField.classList.remove('opened')"
-                    [class.dd-inline-current]="lettersClass.indexOf(letter.value) !== -1">
-                    <div class="category-text-link">{{letter.value}}</div>
-                  </a>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
-        <a *ngIf="classes.length > 0" class="dd-toggle-isclass"
-          (click)="isClasses = !isClasses">{{isClasses ? 'Класса нет в списке' : 'Выбрать класс из списка'}}</a>
+        <prf-dropdown-with-search
+          *ngIf="!isClasses"
+          class="dropdown-inline cat dd-padding-l"
+          formControlName="schoolClassLetter"
+          [label]="'Класс'"
+          [type]="1"
+          [options]="schoolClassLetter"
+          [isError]="submitted && f.schoolClassLetter.errors"
+        ></prf-dropdown-with-search>
+
+        <a
+          *ngIf="schoolClassView.length > 0"
+          class="dd-toggle-isclass"
+          (click)="tooggleSelectClassType()"
+          >{{
+            isClasses
+              ? ('SHARED.FORM.CLASS_NOT_LISTED' | translate)
+              : ('SHARED.FORM.SELECT_LISTED' | translate)
+          }}</a
+        >
       </div>
     </div>
 
+    <div class="terms">
+      <prf-custom-check-box formControlName="personalTerms">
+        {{ 'SHARED.AGREEMENT.ACCEPT_TEXT' | translate }}
+        <a href="{{ getDocsRoute() + '/Agreement.pdf' }}" target="_blank" rel="nofollow">{{
+          'SHARED.AGREEMENT.USER_CONFIRMATION' | translate
+        }}</a>
+        {{ 'SHARED.AGREEMENT.CONSENT_PROCESSING' | translate }}
+        <a href="{{ getDocsRoute() + '/PrivacyPolicy.pdf' }}" target="_blank" rel="nofollow">{{
+          'SHARED.AGREEMENT.MY_PRIVATE_DATA' | translate
+        }}</a>
+      </prf-custom-check-box>
+    </div>
 
     <div class="terms">
       <prf-custom-check-box formControlName="personalTerms">
-        Принимаю условия
-        <a href="/assets/docs/Agreement.pdf" target="_blank" rel="nofollow">пользовательского
-          соглашения</a> и даю согласие на обработку моих
-        <a href="/assets/docs/PrivacyPolicy.pdf" target="_blank" rel="nofollow">персональных данных</a>
+        {{ 'SHARED.AGREEMENT.ACCEPT_TEXT' | translate }}
+        <a href="{{ getDocsRoute() + '/Agreement.pdf' }}" target="_blank" rel="nofollow">{{
+          'SHARED.AGREEMENT.USER_CONFIRMATION' | translate
+        }}</a>
+        {{ 'SHARED.AGREEMENT.CONSENT_PROCESSING' | translate }}
+        <a href="{{ getDocsRoute() + '/PrivacyPolicy.pdf' }}" target="_blank" rel="nofollow">{{
+          'SHARED.AGREEMENT.MY_PRIVATE_DATA' | translate
+        }}</a>
       </prf-custom-check-box>
     </div>
 
     <div class="w-center-content">
-      <a (click)="animateLogin()" [ngClass]="{'disabled': !isAccessAllowed()}" [class.btn-waiting]="buttonWaiting"
-        [class.btn-activated]="buttonActivated" [class.btn-activate]="!buttonActivate"
-        class="button-animate btn-activate" id="btnActivation">
+      <a
+        (click)="animateLogin()"
+        [ngClass]="{disabled: !isAccessAllowed}"
+        [class.btn-waiting]="buttonWaiting"
+        [class.btn-activated]="buttonActivated"
+        [class.btn-activate]="!buttonActivate"
+        class="button-animate btn-activate"
+        id="btnActivation"
+      >
         <span class="btn-icon"></span>
-        <span class="btn-text" data-wait="Подождите" data-after="Зарегистрированы">Зарегистрироваться</span>
+        <span class="btn-text" data-wait="Подождите" data-after="Зарегистрированы">{{
+          'SHARED.REGISTER' | translate
+        }}</span>
       </a>
     </div>
   </div>

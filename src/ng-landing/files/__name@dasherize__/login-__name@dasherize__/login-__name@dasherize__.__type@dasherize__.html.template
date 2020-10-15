@@ -1,29 +1,15 @@
 <div class="login-section">
   <div class="login-container">
-
     <a routerLink="/" class="login-logo w-inline-block">
-      <img class="login-logo-img" src="/assets/images/profilum-logo.svg" alt="Profilum logo">
+      <img class="login-logo-img" src="/assets/images/profilum-logo.svg" alt="Profilum logo" />
     </a>
 
     <div class="tabs login w-tabs">
-      <div class="tabs-menu w-tab-menu">
-        <a [routerLink]="['/login-<%= name %>']" [routerLinkActive]="['w--current']"
-          class="tab-link login w-inline-block w-tab-link">
-          <div>Вход</div>
-          <img src="/assets/images/angle.png" width="20" class="angle">
-        </a>
-        <a [routerLink]="['/registration-<%= name %>']" [routerLinkActive]="['w--current']"
-          class="tab-link login w-inline-block w-tab-link">
-          <div>Регистрация</div>
-          <img src="/assets/images/angle2.png" width="20" class="angle _2">
-        </a>
-      </div>
-
       <div class="tabs-content w-tab-content">
         <div class="w-tab-pane w--tab-active">
           <div class="tab-pane login">
             <div class="user-data-form-block w-form">
-               <form [formGroup]="form" (keyup.enter)="onClickLogin()" autocomplete="false">
+              <form [formGroup]="form" (keyup.enter)="onClickLogin()" autocomplete="false">
                 <div class="login-form-row">
                   <label for="email" class="login-label">{{ 'LOGIN_KZ.EMAIL' | translate }}</label>
                   <div class="login-field-column">
@@ -92,7 +78,11 @@
                 </div>
               </form>
             </div>
-            <a class="recovery-link" [routerLink]="['/recovery_password']" [routerLinkActive]="['w--current']">
+            <a
+              class="recovery-link"
+              [routerLink]="['/recovery_password']"
+              [routerLinkActive]="['w--current']"
+            >
               Забыли пароль?
             </a>
           </div>

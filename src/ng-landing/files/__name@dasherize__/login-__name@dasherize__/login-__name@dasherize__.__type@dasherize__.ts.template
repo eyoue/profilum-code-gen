@@ -37,4 +37,3 @@ export class Login<%= classify(name) %>Component extends LoginBase<Login<%= clas
     );
   }
 }
-
