@@ -14,7 +14,7 @@ import {
 import {applyLintFix} from '@schematics/angular/utility/lint-fix';
 import {parseName} from '@schematics/angular/utility/parse-name';
 import {getWorkspace} from '@schematics/angular/utility/config';
-import {buildDefaultPath} from '@schematics/angular/utility/project';
+import {buildDefaultPath} from '@schematics/angular/utility/workspace';
 import {addImportToModule} from '@schematics/angular/utility/ast-utils';
 import {InsertChange} from '@schematics/angular/utility/change';
 import {buildRelativePath, findModuleFromOptions} from '@schematics/angular/utility/find-module';
@@ -84,6 +84,7 @@ const workspace = getWorkspace(host);
         }
         const project = workspace.projects[options.project];
         if (options.path === undefined) {
+            // @ts-ignore
             options.path = buildDefaultPath(project);
         }
         options.module = findModuleFromOptions(host, options);
