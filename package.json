@@ -69,5 +69,5 @@
     "build:watch": "tsc -p tsconfig.json --watch",
     "test": "npm run build && jasmine src/**/*_spec.js"
   },
-  "version": "0.0.6"
+  "version": "0.0.7"
 }
